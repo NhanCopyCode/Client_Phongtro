@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+    --width-lg-container: 1320px;
+    --width-md-container: 1120px;
+    --width-sm-container: 960px;
+    --width-xs-container: 720px;
+    --color-background: #fdf5ed;
+    --color-primary: #0d6efd;
+    --color-secondary: #e51f40;
+    --color-background-input: #f3f6f7;
+    --color-success: #068906;
+
+}
+
+.container {
+    max-width: var(--width-lg-container);
+    margin: 0 auto;
+
+}

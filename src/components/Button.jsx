@@ -15,7 +15,6 @@ function Button({
 	hoverEffect = "darken",
 	onClick,
 }) {
-	console.log("Render button");
 	// const validHoverEffect = {
 	// 	none: "",
 	// 	darken: "hover:bg-gray-200",
@@ -30,7 +29,8 @@ function Button({
 	const validSizeButton = {
 		sm: "py-1 px-2",
 		md: "py-2 px-4",
-		xl: "py-3 px-6",
+		lg: "py-3 px-6",
+		
 	};
 
 	const appliedSizeButton =
@@ -79,4 +79,4 @@ Button.propTypes = {
 	hoverEffect: PropTypes.string,
 	onClick: PropTypes.func,
 };
-export default Button;
+export default memo(Button);

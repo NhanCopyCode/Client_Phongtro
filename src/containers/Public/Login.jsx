@@ -1,5 +1,11 @@
+import InputForm from "../../components/LoginForm";
+
 function Login() {
-    return ( <div className="">Login</div>  );
+	return (
+		<div className="w-full flex items-center justify-center">
+			<InputForm />
+		</div>
+	);
 }
 
 export default Login;

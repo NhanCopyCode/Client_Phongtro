@@ -10,11 +10,12 @@
     --color-secondary: #e51f40;
     --color-background-input: #f3f6f7;
     --color-success: #068906;
+    --color-borderColor: #c4c8cb;
 
 }
 
 .container {
     max-width: var(--width-lg-container);
     margin: 0 auto;
-
+    max-width: 100%;
 }

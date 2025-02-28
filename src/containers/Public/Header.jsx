@@ -1,44 +1,44 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Logo from "../../assets/logo-phongtro.svg";
 import { CiFolderOn, CiHeart, CiLogin } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { Button } from "../../components";
-const customStyles = {
-	content: {
-		top: "50%",
-		left: "50%",
-		right: "auto",
-		bottom: "auto",
-		marginRight: "-50%",
-		transform: "translate(-50%, -50%)",
-	},
-};
+import { useCallback } from "react";
+import { path } from "../../utils/constants";
+
 function Header() {
 	const navigate = useNavigate();
 
-	const handleNavigateLogin = () => {
-		navigate("/login");
-	};
+	const handleNavigateLogin = useCallback(
+		(flag) => {
+			navigate("/login", {
+				replace: true,
+				state: {
+					type: flag,
+				},
+			});
+		},
+		[navigate]
+	);
+
 	return (
-		<section className="w-lg-container flex justify-between items-center my-0 mx-auto border px-2">
+		<div className="w-lg-container flex justify-between items-center my-0 mx-auto border-b-[1px] border-borderColor px-2">
 			<div className="flex items-center">
-				<img
-					src={Logo}
-					alt="Logo"
-					className="w-[190px] h-[60px] object-contain mr-2"
-				/>
-				{/* <div
-					className="relative px-4 py-2 outline-0 border-0 rounded-2xl bg-background-input
-						text-black text-[14px] h-[35px] flex items-center "
-				>
-					<CiLocationOn />
-					<p>Tìm kiếm theo khu vực</p>
-				</div> */}
+				<Link to={"/"}>
+					<img
+						src={Logo}
+						alt="Logo"
+						className="w-[190px] h-[60px] object-contain mr-2"
+					/>
+				</Link>
+
 				<Button
 					textColor="text-black"
 					iconLeft={<CiLocationOn className="w-full h-full" />}
 					widthAndHeightIcon={"w-[13px] h-[13px]"}
+					hoverEffect="darken"
 				>
 					Tìm kiếm theo khu vực
 				</Button>
@@ -68,13 +68,24 @@ function Header() {
 					widthAndHeightIcon={"w-[18px] h-[18px]"}
 					hoverEffect="lighten"
 					sizeButton="md"
-					onClick={handleNavigateLogin}
+					onClick={(e) => handleNavigateLogin(false)}
 				>
 					Đăng nhập
 				</Button>
-				<p>Xin chào ThanhNhangg</p>
+				<Button
+					iconLeft={<CiLogin className="w-full h-full" />}
+					textColor="text-white"
+					bgColor="bg-primary"
+					widthAndHeightIcon={"w-[18px] h-[18px]"}
+					hoverEffect="lighten"
+					sizeButton="md"
+					onClick={(e) => handleNavigateLogin(true)}
+				>
+					Đăng ký
+				</Button>
+				{/* <p>Xin chào ThanhNhangg</p> */}
 			</div>
-		</section>
+		</div>
 	);
 }
 

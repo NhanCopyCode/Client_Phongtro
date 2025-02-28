@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./index.css";
 import App from "./App.jsx";
-import { path } from "./ultils/constants.js";
+import { path } from "./utils/constants.js";
 import Login from "./containers/Public/Login.jsx";
 import { Home } from "./containers/Public/index.js";
 
@@ -18,8 +18,9 @@ createRoot(document.getElementById("root")).render(
 			<PersistGate loading={null} persistor={persistor}>
 				<BrowserRouter>
 					<Routes>
-						<Route path={path.HOME} element={<Home />} />
-						<Route path={path.LOGIN} element={<Login />} />
+						<Route path={path.HOME} element={<Home />}>
+							<Route path={path.LOGIN} element={<Login />} />
+						</Route>
 					</Routes>
 				</BrowserRouter>
 			</PersistGate>

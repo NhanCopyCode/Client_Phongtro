@@ -5,14 +5,12 @@ import { Navigation } from "../../components";
 
 function Home() {
 	return (
-		<>
+		<div className="w-full h-screen  bg-background">
 			<Header />
 			<Navigation />
-			<div className="w-lg-container my-0 mx-auto px-2">
-				<Outlet />
-			</div>
+			<Outlet />
 			<Footer />
-		</>
+		</div>
 	);
 }
 

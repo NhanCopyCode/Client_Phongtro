@@ -6,7 +6,6 @@ import reduxStore from "./redux.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./index.css";
-import App from "./App.jsx";
 import { path } from "./utils/constants.js";
 import Login from "./containers/Public/Login.jsx";
 import { Home } from "./containers/Public/index.js";

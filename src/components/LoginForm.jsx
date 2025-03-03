@@ -3,12 +3,16 @@ import Button from "./Button";
 import Input from "./Input";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { apiRegister } from "../services/authService";
+import * as actions from "../store/actions";
+import { useDispatch } from "react-redux";
 
 function LoginForm() {
 	const [name, setName] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [password, setPassword] = useState("");
+	const [invalidFields, setInvalidFields] = useState([]);
+
+	const dispatch = useDispatch();
 
 	const location = useLocation();
 	const [isRegister, setIsRegister] = useState(location.state?.type);
@@ -17,16 +21,31 @@ function LoginForm() {
 		setIsRegister(location.state?.type);
 	}, [location.state?.type]);
 
-	const handleSubmit = () => {
-		console.log({
-			name,
-			phoneNumber,
-			password
-		});
+	const handleSubmit = async () => {
+		const payload = isRegister
+			? {
+					name,
+					phone: phoneNumber,
+					password,
+			  }
+			: {
+					phone: phoneNumber,
+					password,
+			  };
+
+		validateInput(payload);
+		isRegister
+			? dispatch(actions.register(payload))
+			: dispatch(actions.login(payload));
+	};
+
+	const validateInput = (payload) => {
+		
+		console.log(payload);
 	};
 
 	return (
-		<div className="w-full bg-background flex items-center justify-center">
+		<div className=" flex items-center justify-center w-lg-container h-full my-0 mx-auto px-2">
 			<div className="w-[552px] h-auto p-6 flex flex-col space-y-4 rounded-md !shadow-md my-7 bg-white">
 				<h3 className="font-semibold text-2xl text-center">
 					{isRegister ? "Đăng kí" : "Đăng nhập"}

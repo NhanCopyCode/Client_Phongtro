@@ -24,7 +24,7 @@ function Header() {
 	);
 
 	return (
-		<div className="w-lg-container flex justify-between items-center my-0 mx-auto border-b-[1px] border-borderColor px-2">
+		<div className="w-lg-container flex justify-between items-center my-0 mx-auto border-b-[1px] border-borderColor px-2 bg-white">
 			<div className="flex items-center">
 				<Link to={"/"}>
 					<img

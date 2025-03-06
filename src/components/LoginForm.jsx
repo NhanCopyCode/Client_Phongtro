@@ -1,16 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import Input from "./Input";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import * as actions from "../store/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 function LoginForm() {
 	const [name, setName] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [password, setPassword] = useState("");
 	const [invalidFields, setInvalidFields] = useState([]);
+	const { isLoggedIn, msg, update } = useSelector((state) => state.auth);
+	const navigate = useNavigate();
 
 	const dispatch = useDispatch();
 
@@ -18,9 +24,29 @@ function LoginForm() {
 	const [isRegister, setIsRegister] = useState(location.state?.type);
 
 	useEffect(() => {
-		setIsRegister(location.state?.type);
+		handleTogglePage();
 	}, [location.state?.type]);
 
+	useEffect(() => {
+		isLoggedIn && navigate("/");
+	}, [isLoggedIn]);
+
+	useEffect(() => {
+		if (msg) {
+			Swal.fire({
+				text: msg,
+				icon: "error",
+			});
+		}
+	}, [msg, update]);
+
+	const handleTogglePage = () => {
+		setIsRegister(location.state?.type);
+		setInvalidFields([]);
+		setName("");
+		setPhoneNumber("");
+		setPassword("");
+	};
 	const handleSubmit = async () => {
 		const payload = isRegister
 			? {
@@ -33,15 +59,60 @@ function LoginForm() {
 					password,
 			  };
 
-		validateInput(payload);
-		isRegister
-			? dispatch(actions.register(payload))
-			: dispatch(actions.login(payload));
+		const errors = validateInput(payload);
+		console.log("InvalidField ", errors);
+		if (errors.length === 0) {
+			isRegister
+				? dispatch(actions.register(payload))
+				: dispatch(actions.login(payload));
+		}
 	};
 
 	const validateInput = (payload) => {
-		
-		console.log(payload);
+		const credentials = Object.entries(payload);
+		let errors = [];
+
+		credentials.forEach(([key, value]) => {
+			switch (key) {
+				case "password":
+					if (value.length < 6) {
+						errors.push({
+							name: key,
+							message: "Mật khẩu phải ít nhất 6 ký tự.",
+						});
+					}
+					break;
+				case "phone":
+					if (!/^\d+$/.test(value)) {
+						errors.push({
+							name: key,
+							message: "Số điện thoại không hợp lệ",
+						});
+					} else if (!String(value).startsWith("0")) {
+						errors.push({
+							name: key,
+							message: "Số điện thoại không hợp lệ",
+						});
+					} else if (value.length !== 10) {
+						errors.push({
+							name: key,
+							message: "Số điện thoại phải đủ 10 số",
+						});
+					}
+					break;
+				default:
+					if (!value || value.trim() === "") {
+						errors.push({
+							name: key,
+							message: "Trường này không được để trống.",
+						});
+					}
+					break;
+			}
+		});
+
+		setInvalidFields(errors);
+		return errors;
 	};
 
 	return (
@@ -58,6 +129,9 @@ function LoginForm() {
 						width={"w-full"}
 						value={name}
 						setValue={setName}
+						name="name"
+						invalidField={invalidFields}
+						setInvalidFields={setInvalidFields}
 					>
 						Tên
 					</Input>
@@ -69,6 +143,9 @@ function LoginForm() {
 					width={"w-full"}
 					value={phoneNumber}
 					setValue={setPhoneNumber}
+					name="phone"
+					invalidField={invalidFields}
+					setInvalidFields={setInvalidFields}
 				>
 					Số điện thoại
 				</Input>
@@ -80,6 +157,9 @@ function LoginForm() {
 					type="password"
 					value={password}
 					setValue={setPassword}
+					name="password"
+					invalidField={invalidFields}
+					setInvalidFields={setInvalidFields}
 				>
 					Mật khẩu
 				</Input>
@@ -102,14 +182,26 @@ function LoginForm() {
 					{isRegister ? (
 						<small
 							className="text-sm underline underline-offset-2 text-primary hover:text-red-700 cursor-pointer"
-							onClick={(e) => setIsRegister(false)}
+							onClick={() => {
+								setIsRegister(false);
+								setInvalidFields([]);
+								setName("");
+								setPhoneNumber("");
+								setPassword("");
+							}}
 						>
 							Bạn có tài khoản ?
 						</small>
 					) : (
 						<small
 							className="text-sm underline underline-offset-2 text-primary hover:text-red-700 cursor-pointer"
-							onClick={(e) => setIsRegister(true)}
+							onClick={() => {
+								setIsRegister(true);
+								setInvalidFields([]);
+								setName("");
+								setPhoneNumber("");
+								setPassword("");
+							}}
 						>
 							Tạo tài khoản mới
 						</small>

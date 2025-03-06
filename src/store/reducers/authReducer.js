@@ -4,17 +4,16 @@ const initState = {
 	isLoggedIn: false,
 	token: null,
 	msg: "",
+	update: false,
 };
 
 const authReducer = (state = initState, action) => {
 	switch (action.type) {
 		case actionTypes.REGISTER_SUCCESS: {
-
 			const newState = {
 				...state,
 				isLoggedIn: true,
 				token: action.data,
-				msg: ''
 			};
 
 			return newState;
@@ -31,22 +30,22 @@ const authReducer = (state = initState, action) => {
 				...state,
 				isLoggedIn: true,
 				token: action.data,
-				msg: ''
-			}
-		case actionTypes.LOGIN_FAIL: 
+			};
+		case actionTypes.LOGIN_FAIL:
 			return {
 				...state,
 				isLoggedIn: false,
 				token: null,
-				msg: action.data 
-			}
-		case actionTypes.LOGOUT: 
+				msg: action.data,
+				update: !state.update,
+			};
+		case actionTypes.LOGOUT:
 			return {
 				...state,
 				isLoggedIn: false,
 				token: null,
-				msg: ''
-			}
+				msg: null,
+			};
 		default:
 			return state;
 	}

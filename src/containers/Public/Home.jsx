@@ -5,7 +5,7 @@ import { Navigation } from "../../components";
 
 function Home() {
 	return (
-		<div className="w-full h-screen  bg-background">
+		<div className="w-full bg-background">
 			<Header />
 			<Navigation />
 			<Outlet />

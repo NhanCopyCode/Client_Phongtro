@@ -1,15 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 import Logo from "../../assets/logo-phongtro.svg";
-import { CiFolderOn, CiHeart, CiLogin } from "react-icons/ci";
+import { CiFolderOn, CiHeart, CiLogin, CiLogout } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { Button } from "../../components";
 import { useCallback } from "react";
-import { path } from "../../utils/constants";
+import * as actions from '../../store/actions';
+
 
 function Header() {
+	const { isLoggedIn } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleNavigateLogin = useCallback(
 		(flag) => {
@@ -23,67 +27,89 @@ function Header() {
 		[navigate]
 	);
 
+	const handleLogout = () => {
+		dispatch(actions.logout());
+	}
+
 	return (
-		<div className="w-lg-container flex justify-between items-center my-0 mx-auto border-b-[1px] border-borderColor px-2 bg-white">
-			<div className="flex items-center">
-				<Link to={"/"}>
-					<img
-						src={Logo}
-						alt="Logo"
-						className="w-[190px] h-[60px] object-contain mr-2"
-					/>
-				</Link>
+		<div className="bg-white">
+			<div className="w-lg-container flex justify-between items-center my-0 mx-auto border-b-[1px] border-borderColor px-2 max-w-[100%]">
+				<div className="flex items-center">
+					<Link to={"/"}>
+						<img
+							src={Logo}
+							alt="Logo"
+							className="w-[190px] h-[60px] object-contain mr-2"
+						/>
+					</Link>
 
-				<Button
-					textColor="text-black"
-					iconLeft={<CiLocationOn className="w-full h-full" />}
-					widthAndHeightIcon={"w-[13px] h-[13px]"}
-					hoverEffect="darken"
-				>
-					Tìm kiếm theo khu vực
-				</Button>
-			</div>
+					<Button
+						textColor="text-black"
+						iconLeft={<CiLocationOn className="w-full h-full" />}
+						widthAndHeightIcon={"w-[13px] h-[13px]"}
+						hoverEffect="darken"
+					>
+						Tìm kiếm theo khu vực
+					</Button>
+				</div>
 
-			<div className="flex items-center space-x-1">
-				<Button
-					iconLeft={<CiHeart className="w-full h-full" />}
-					textColor="text-black"
-					bgColor="bg-none"
-					widthAndHeightIcon={"w-[18px] h-[18px]"}
-				>
-					Tin đã lưu
-				</Button>
-				<Button
-					iconLeft={<CiFolderOn className="w-full h-full" />}
-					textColor="text-black"
-					bgColor="bg-none"
-					widthAndHeightIcon={"w-[18px] h-[18px]"}
-				>
-					Quản lý
-				</Button>
-				<Button
-					iconLeft={<CiLogin className="w-full h-full" />}
-					textColor="text-white"
-					bgColor="bg-primary"
-					widthAndHeightIcon={"w-[18px] h-[18px]"}
-					hoverEffect="lighten"
-					sizeButton="md"
-					onClick={(e) => handleNavigateLogin(false)}
-				>
-					Đăng nhập
-				</Button>
-				<Button
-					iconLeft={<CiLogin className="w-full h-full" />}
-					textColor="text-white"
-					bgColor="bg-primary"
-					widthAndHeightIcon={"w-[18px] h-[18px]"}
-					hoverEffect="lighten"
-					sizeButton="md"
-					onClick={(e) => handleNavigateLogin(true)}
-				>
-					Đăng ký
-				</Button>
-				{/* <p>Xin chào ThanhNhangg</p> */}
+				<div className="flex items-center space-x-1">
+					<Button
+						iconLeft={<CiHeart className="w-full h-full" />}
+						textColor="text-black"
+						bgColor="bg-none"
+						widthAndHeightIcon={"w-[18px] h-[18px]"}
+					>
+						Tin đã lưu
+					</Button>
+					<Button
+						iconLeft={<CiFolderOn className="w-full h-full" />}
+						textColor="text-black"
+						bgColor="bg-none"
+						widthAndHeightIcon={"w-[18px] h-[18px]"}
+					>
+						Quản lý
+					</Button>
+					{!isLoggedIn ? (
+						<>
+							<Button
+								iconLeft={<CiLogin className="w-full h-full" />}
+								textColor="text-white"
+								bgColor="bg-primary"
+								widthAndHeightIcon={"w-[18px] h-[18px]"}
+								hoverEffect="lighten"
+								sizeButton="md"
+								onClick={() => handleNavigateLogin(false)}
+							>
+								Đăng nhập
+							</Button>
+							<Button
+								iconLeft={<CiLogin className="w-full h-full" />}
+								textColor="text-white"
+								bgColor="bg-primary"
+								widthAndHeightIcon={"w-[18px] h-[18px]"}
+								hoverEffect="lighten"
+								sizeButton="md"
+								onClick={() => handleNavigateLogin(true)}
+							>
+								Đăng ký
+							</Button>
+						</>
+					) : (
+						<Button
+							iconLeft={<CiLogout className="w-full h-full" />}
+							textColor="text-white"
+							bgColor="bg-[red]"
+							widthAndHeightIcon={"w-[18px] h-[18px]"}
+							hoverEffect="lighten"
+							sizeButton="md"
+							onClick={handleLogout}
+						>
+							Đăng xuất
+						</Button>
+					)}
+					{/* <p>Xin chào ThanhNhangg</p> */}
+				</div>
 			</div>
 		</div>
 	);

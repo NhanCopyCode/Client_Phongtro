@@ -27,6 +27,7 @@ export const register = (payload) => async (dispatch) => {
 export const login = (payload) => async (dispatch) => {
 	try {
 		const response = await apiLogin(payload);
+		console.log("response: ", response);
 		if (response?.data.errorCode === 0) {
 			dispatch({
 				type: actionTypes.LOGIN_SUCCESS,

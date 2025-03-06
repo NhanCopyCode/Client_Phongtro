@@ -9,6 +9,9 @@ function Input({
 	width,
 	value,
 	setValue,
+	name,
+	invalidField,
+	setInvalidFields,
 }) {
 	const validInputSize = {
 		sm: "px-2 py-1",
@@ -18,14 +21,30 @@ function Input({
 
 	const appliedInputSize = validInputSize[inputSize] || validInputSize["md"];
 	const className = `${appliedInputSize} outline-none ${border} ${rounded} ${width} text-black`;
+
+	const handleResetError = () => {
+		if(invalidField && invalidField.length > 0) {
+			setInvalidFields(invalidField.filter(field => field.name !== name))
+		}
+	};
+
 	return (
-		<input
-			type={type}
-			className={className}
-			placeholder={children}
-			value={value}
-			onChange={(e) => setValue(e.target.value)}
-		/>
+		<>
+			<input
+				type={type}
+				className={className}
+				placeholder={children}
+				value={value}
+				name={name}
+				onChange={(e) => setValue(e.target.value)}
+				onFocus={handleResetError}
+			/>
+			{invalidField && invalidField.length > 0 && (
+				<small className="text-[red] text-sm italic">
+					{invalidField.find((field) => field.name === name)?.message}
+				</small>
+			)}
+		</>
 	);
 }
 
@@ -37,7 +56,10 @@ Input.propTypes = {
 	rounded: PropTypes.string,
 	width: PropTypes.string,
 	value: PropTypes.string,
+	name: PropTypes.string,
+	invalidField: PropTypes.array,
 	setValue: PropTypes.func,
+	setInvalidFields: PropTypes.func,
 };
 
 export default Input;

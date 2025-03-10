@@ -15,11 +15,6 @@ function Button({
 	hoverEffect = "darken",
 	onClick,
 }) {
-	// const validHoverEffect = {
-	// 	none: "",
-	// 	darken: "hover:bg-gray-200",
-	// 	lighten: "hover:[filter:brightness(110%)]",
-	// };
 	const validHoverEffect = {
 		none: "hover:[filter:brightness(100%)]",
 		darken: "hover:bg-gray-200",
@@ -30,14 +25,13 @@ function Button({
 		sm: "py-1 px-2",
 		md: "py-2 px-4",
 		lg: "py-3 px-6",
-		
 	};
 
 	const appliedSizeButton =
 		validSizeButton[sizeButton] || validSizeButton["md"];
 
 	const appliedHoverEffect =
-		validHoverEffect[hoverEffect] || validHoverEffect["darken"];
+		validHoverEffect[hoverEffect] || validHoverEffect["none"];
 	const className = `${appliedSizeButton} flex items-center justify-center
         transition-all duration-200 ease-linear cursor-pointer
         outline-none ${textColor} ${bgColor}  ${fontSize} ${rounded} ${border}

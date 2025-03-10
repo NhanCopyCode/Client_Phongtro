@@ -7,8 +7,8 @@ import { CiFolderOn, CiHeart, CiLogin, CiLogout } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { Button } from "../../components";
 import { useCallback } from "react";
-import * as actions from '../../store/actions';
-
+import * as actions from "../../store/actions";
+import Search from "./Search";
 
 function Header() {
 	const { isLoggedIn } = useSelector((state) => state.auth);
@@ -29,12 +29,12 @@ function Header() {
 
 	const handleLogout = () => {
 		dispatch(actions.logout());
-	}
+	};
 
 	return (
 		<div className="bg-white">
 			<div className="w-lg-container flex justify-between items-center my-0 mx-auto border-b-[1px] border-borderColor px-2 max-w-[100%]">
-				<div className="flex items-center">
+				<div className="flex items-center space-x-2">
 					<Link to={"/"}>
 						<img
 							src={Logo}
@@ -51,6 +51,7 @@ function Header() {
 					>
 						Tìm kiếm theo khu vực
 					</Button>
+					<Search />
 				</div>
 
 				<div className="flex items-center space-x-1">

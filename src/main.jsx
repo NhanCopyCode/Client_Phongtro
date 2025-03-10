@@ -8,7 +8,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import { path } from "./utils/constants.js";
 import Login from "./containers/Public/Login.jsx";
-import { Home } from "./containers/Public/index.js";
+import {
+	Home,
+	RentalApartment,
+	RentalHouse,
+	RentalRoom,
+	RentalSpace,
+} from "./containers/Public/index.js";
+import Homepage from "./containers/Public/Homepage.jsx";
 
 const { store, persistor } = reduxStore();
 createRoot(document.getElementById("root")).render(
@@ -18,7 +25,26 @@ createRoot(document.getElementById("root")).render(
 				<BrowserRouter>
 					<Routes>
 						<Route path={path.HOME} element={<Home />}>
-							<Route path={path.LOGIN} element={<Login />} />
+							<Route
+								path={'*'}
+								element={<Homepage />}
+							/>
+							<Route
+								path={path.CHO_THUE_CAN_HO}
+								element={<RentalApartment />}
+							/>
+							<Route
+								path={path.CHO_THUE_MAT_BANG}
+								element={<RentalSpace />}
+							/>
+							<Route
+								path={path.CHO_THUE_PHONG_TRO}
+								element={<RentalRoom />}
+							/>
+							<Route
+								path={path.NHA_CHO_THUE}
+								element={<RentalHouse />}
+							/>
 						</Route>
 					</Routes>
 				</BrowserRouter>

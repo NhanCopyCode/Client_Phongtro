@@ -7,8 +7,8 @@ import { FaRegSquare } from "react-icons/fa";
 function SearchBottom() {
 	return (
 		<div
-			className="w-full max-w-[1200px] h-auto p-2 mx-auto rounded-xl bg-[#febb02] 
-			grid  gap-4 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1"
+			className="w-5xl max-w-[100%] h-auto p-2 mx-auto rounded-xl bg-[#febb02] 
+			grid  gap-4 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-4"
 		>
 			<SearchItem
 				iconStart={<CiSearch />}
@@ -26,7 +26,7 @@ function SearchBottom() {
 			<SearchItem iconStart={<FaRegSquare />} iconEnd={<GrNext />}>
 				Chọn diện tích
 			</SearchItem>
-			<Button iconLeft={<CiSearch />} bgColor="bg-primary" hoverEffect="">
+			<Button iconLeft={<CiSearch />} bgColor="bg-primary" hoverEffect="" textColor="text-white text-[14px]">
 				Tìm kiếm
 			</Button>
 		</div>

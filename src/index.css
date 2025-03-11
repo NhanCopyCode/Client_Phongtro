@@ -14,7 +14,9 @@
     --color-text: #212529;
     --color-redColor: #E51F40;
     --color-primary: #1266dd;
-
+    --color-price: #068906;
+    --color-yellow: #FFCE3F;
+    --color-subtitle: #adb5bd;
 }
 
 .container {

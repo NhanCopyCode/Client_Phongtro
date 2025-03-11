@@ -22,7 +22,7 @@ function Navigation() {
 	}, []);
 	return (
 		<div className="w-full shadow-md relative z-10 bg-white">
-			<div className="w-lg-container flex items-center my-0 mx-auto px-2 max-w-[100%]">
+			<div className="w-5xl flex items-center my-0 mx-auto px-2 max-w-[100%]">
 				<ul className="flex h-full items-center space-x-4 text-[13px] cursor-pointer flex-wrap">
 					{categories.map((item) => (
 						<li key={item.code} className="h-[40px]">

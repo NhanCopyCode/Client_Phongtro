@@ -42,15 +42,19 @@ function Button({
 		<button className={className} onClick={onClick}>
 			{iconLeft && (
 				<span
-					className={`mr-1 ${widthAndHeightIcon} flex items-center justify-center`}
+					className={`${
+						children ? "mr-1" : ""
+					} ${widthAndHeightIcon} flex items-center justify-center`}
 				>
 					{iconLeft}
 				</span>
 			)}
-			<span>{children}</span>
+			{children ? <span>{children}</span> : null}
 			{iconRight && (
 				<span
-					className={`ml-1 ${widthAndHeightIcon} flex items-center justify-center`}
+					className={`${
+						children ? "ml-1" : ""
+					} ${widthAndHeightIcon} flex items-center justify-center`}
 				>
 					{iconRight}
 				</span>
@@ -60,7 +64,7 @@ function Button({
 }
 
 Button.propTypes = {
-	children: PropTypes.string.isRequired,
+	children: PropTypes.string,
 	textColor: PropTypes.string,
 	bgColor: PropTypes.string,
 	rounded: PropTypes.string,

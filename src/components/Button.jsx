@@ -14,6 +14,8 @@ function Button({
 	iconRight,
 	hoverEffect = "darken",
 	onClick,
+	onMouseEnter,
+	onMouseLeave,
 }) {
 	const validHoverEffect = {
 		none: "hover:[filter:brightness(100%)]",
@@ -39,7 +41,12 @@ function Button({
     `;
 
 	return (
-		<button className={className} onClick={onClick}>
+		<button
+			className={className}
+			onClick={onClick}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
+		>
 			{iconLeft && (
 				<span
 					className={`${
@@ -76,5 +83,7 @@ Button.propTypes = {
 	sizeButton: PropTypes.string,
 	hoverEffect: PropTypes.string,
 	onClick: PropTypes.func,
+	onMouseEnter: PropTypes.func,
+	onMouseLeave: PropTypes.func,
 };
 export default memo(Button);

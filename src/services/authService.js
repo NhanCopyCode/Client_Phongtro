@@ -1,5 +1,4 @@
 import axios from "../axios.config";
-import actionTypes from "../store/actions/actionTypes";
 
 
 const apiRegister = async (payload) => {

@@ -1,8 +1,10 @@
 import { text } from "../../utils/constants";
 import Provinces from "../../components/Provinces";
 import ListRental from "../../components/ListRental";
+import { useSearchParams } from "react-router-dom";
 
 function Homepage() {
+	const [searchParams] = useSearchParams();
 	return (
 		<>
 			<div className="w-full bg-transparent flex items-center justify-center flex-col mt-4">
@@ -12,7 +14,7 @@ function Homepage() {
 					<Provinces />
 				</div>
 			</div>
-			<ListRental />
+			<ListRental page={searchParams.get('page')}/>
 		</>
 	);
 }

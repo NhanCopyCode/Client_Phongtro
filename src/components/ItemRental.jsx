@@ -1,32 +1,35 @@
-import { CiHeart } from "react-icons/ci";
-import Button from "../components/Button";
-
-import { FaStar } from "react-icons/fa";
-import { MdOutlinePhone } from "react-icons/md";
-import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import { useState } from "react";
 
-const images = [
-	"https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/6310726d-d075-4e35-b1cb-cf5616bf5212_1658240491.jpg",
-	"https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/9c60836e-26b2-4737-a6c8-60cb5187fa4c_1658240485.jpg",
-	"https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/716c753e-8e03-4cc8-9d09-e52ec19ce01b_1658240485.jpg",
-	"https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/400e7ebd-5d88-48af-8599-0d074a1ee014_1658240494.jpg",
-	"https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/1379ebdf-eda5-4ef8-bb22-7da1d19551f2_1658240490.jpg",
-	"https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/6310726d-d075-4e35-b1cb-cf5616bf5212_1658240491.jpg",
-	"https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/9c60836e-26b2-4737-a6c8-60cb5187fa4c_1658240485.jpg",
-];
+import { CiHeart } from "react-icons/ci";
+import { FaCamera, FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { MdOutlinePhone } from "react-icons/md";
 
-function ItemRental() {
+import Button from "../components/Button";
+import toLowerCaseNonAccentVietnamese from "../utils/convertStringToPath";
+
+function ItemRental({
+	address,
+	attributes,
+	description,
+	images,
+	star,
+	title,
+	user,
+	id,
+}) {
 	const [isHover, setHover] = useState(false);
 	const handleMouseEnter = () => {
 		setHover(true);
-	}
+	};
 	const handleMouseLeave = () => {
 		setHover(false);
-	}
+	};
 	return (
 		<div className="bg-white shadow-sm rounded-sm p-3">
-			<div className="flex items-center gap-1 h-[260px]">
+			{/* 4 images */}
+			<div className="flex items-center gap-1 h-[260px] relative">
 				<div className="w-3/5 h-full">
 					<img
 						className="w-full h-full object-cover"
@@ -37,54 +40,61 @@ function ItemRental() {
 				<div className="w-2/5 h-full flex items-center flex-col gap-1 overflow-hidden">
 					<img
 						className="w-full h-full object-cover max-h-1/2"
-						src={images[0]}
+						src={images[1]}
 						alt=""
 					/>
 					<div className="w-full h-1/2 flex items-center gap-1">
 						<img
-							className="w-full h-full object-cover"
-							src={images[0]}
+							className="w-1/2 h-full object-cover"
+							src={images[2]}
 							alt=""
 						/>
 						<img
-							className="w-full h-full object-cover"
-							src={images[0]}
+							className="w-1/2 h-full object-cover"
+							src={images[3]}
 							alt=""
 						/>
 					</div>
+				</div>
+
+				<div className="absolute bottom-1 left-1 py-1 px-2 bg-overlay text-[10px] text-white flex items-center gap-1 rounded-sm">
+					<FaCamera color="white" />
+					<span>{images.length}</span>
 				</div>
 			</div>
 
 			{/* Content */}
 			<div className="">
-				<h3 className="text-redColor text-sm uppercase font-medium my-2">
+				<Link
+					to={`chi-tiet/${toLowerCaseNonAccentVietnamese(
+						title
+					)}/${id}`}
+					className="text-redColor text-sm uppercase font-medium my-2"
+				>
 					<div className="inline-flex items-center text-yellow me-2 gap-1">
-						<FaStar />
-						<FaStar />
-						<FaStar />
-						<FaStar />
-						<FaStar />
+						{[...Array(star)].map((_, index) => (
+							<FaStar key={index} />
+						))}
 					</div>
-					PHÒNG ĐẸP ĐIỆN BIÊN PHỦ, NGAY HUTECH, HÀNG XANH, BÌNH THẠNH,
-					GẦN GA METRO VĂN THÁNH
-				</h3>
+					{title}
+				</Link>
 				<div className="flex items-center space-x-4">
-					<span className="font-medium text-price">
-						3.7 triệu/tháng
+					<span className="font-medium text-price text-[12px]">
+						{attributes.price}
 					</span>
-					<span className="text-sm text-text ">22 m2</span>
+					<span className="text-[12px] text-text ">
+						{attributes.acreage}
+					</span>
 					<Link
 						to={"/tinh-thanh/binh-thanh"}
-						className="text-sm text-text"
+						className="text-[12px] text-text line-clamp-1"
 					>
-						Bình Thạnh, Hồ Chí Minh
+						{address.split(": ")[1]}
 					</Link>
 				</div>
 
-				<div className="text-[12px] text-subtitle my-2">
-					Phòng đẹp cho thuê đường Điện Biên Phủ, Bình Thạnh, đối diện
-					đường Nguyễn Gia Trí, gần ngã tư Hàng Xanh, ĐH Hutech, ĐH
-					GTVT, ĐH Ngoại thương, chỉ 5…
+				<div className="text-[12px] text-subtitle my-2 line-clamp-2">
+					{description}
 				</div>
 
 				<div className="flex items-center justify-between  mt-4">
@@ -97,8 +107,10 @@ function ItemRental() {
 							/>
 						</div>
 						<div className="flex flex-col justify-items-start">
-							<h4 className="text-sm text-text">Chị Nga</h4>
-							<p className="text-[12px] text-subtitle">Hôm nay</p>
+							<h4 className="text-sm text-text">{user?.name}</h4>
+							<p className="text-[12px] text-subtitle">
+								{attributes?.published}
+							</p>
 						</div>
 					</div>
 					<div className="flex items-center space-x-2">
@@ -112,10 +124,16 @@ function ItemRental() {
 							sizeButton="sm"
 							rounded="rounded-lg"
 						>
-							099123911
+							{user?.phone}
 						</Button>
 						<Button
-							iconLeft={ isHover ? <CiHeart className="text-lg" color="red"/> : <CiHeart className="text-lg" />}
+							iconLeft={
+								isHover ? (
+									<CiHeart className="text-lg" color="red" />
+								) : (
+									<CiHeart className="text-lg" />
+								)
+							}
 							textColor="text-text text-xl font-bold"
 							bgColor="bg-none"
 							sizeButton="md"
@@ -128,5 +146,16 @@ function ItemRental() {
 		</div>
 	);
 }
+
+ItemRental.propTypes = {
+	address: PropTypes.string,
+	attributes: PropTypes.string,
+	description: PropTypes.string,
+	images: PropTypes.string,
+	star: PropTypes.number,
+	title: PropTypes.string,
+	user: PropTypes.object,
+	id: PropTypes.string,
+};
 
 export default ItemRental;

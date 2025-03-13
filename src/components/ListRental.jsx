@@ -1,7 +1,13 @@
-import { NavLink, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
+import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import ItemRental from "./ItemRental";
 import { FaCaretDown } from "react-icons/fa";
 import Sidebar from "./Sidebar";
+import { memo, useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getPostLimit } from "../store/actions/post";
+import Pagination from "./pagination";
 
 const links = [
 	{
@@ -18,13 +24,23 @@ const links = [
 	},
 ];
 
-function ListRental() {
+function ListRental({ page }) {
+	const [searchParams] = useSearchParams();
+
 	const location = useLocation();
+	const dispatch = useDispatch();
+	const { posts } = useSelector((state) => state.post);
+
+	useEffect(() => {
+		let offset = page ? +page : 0;
+		dispatch(getPostLimit(offset));
+		window.scroll({ top: 0, left: 0, behavior: "smooth" });
+	}, [page]);
 
 	return (
 		<div className="w-5xl max-w-[100%] mx-auto mt-8">
 			<div className="grid grid-cols-10 gap-4 ">
-				<div className="col-span-7 bg-transparent p-4">
+				<div className="col-span-10 md:col-span-7 bg-transparent p-4">
 					<div className="flex items-center gap-1">
 						<NavLink className="text-redColor text-sm bg-white rounded-sm shadow-lg font-medium py-2 px-4">
 							Toàn quốc
@@ -67,13 +83,30 @@ function ListRental() {
 					</div>
 
 					<div className="grid grid-cols-1 gap-4 mt-4">
-						<ItemRental />
-						<ItemRental />
-						<ItemRental />
-						<ItemRental />
+						{posts &&
+							posts.length > 0 &&
+							posts.map((item) => (
+								<ItemRental
+									key={item?.id}
+									address={item?.address}
+									attributes={item?.attributes}
+									description={JSON.parse(item?.description)}
+									images={JSON.parse(item?.images.image)}
+									star={+item?.star}
+									title={item?.title}
+									user={item?.user}
+									id={item?.id}
+								/>
+							))}
+					</div>
+
+					<div className="mt-4">
+						<Pagination
+							currentPage={Number(searchParams.get("page")) || 0}
+						/>
 					</div>
 				</div>
-				<div className="col-span-3">
+				<div className="col-span-10 md:col-span-3 p-4 md:p-0">
 					<Sidebar />
 				</div>
 			</div>
@@ -81,4 +114,8 @@ function ListRental() {
 	);
 }
 
-export default ListRental;
+ListRental.propTypes = {
+	page: PropTypes.string,
+};
+
+export default memo(ListRental);

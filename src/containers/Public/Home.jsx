@@ -11,7 +11,6 @@ function Home() {
 			<Navigation />
 			<SearchBottom />
 			<Outlet />
-			<Footer />
 		</div>
 	);
 }

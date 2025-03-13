@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./index.css";
 import { path } from "./utils/constants.js";
-import Login from "./containers/Public/Login.jsx";
 import {
 	Home,
 	RentalApartment,
@@ -16,6 +15,8 @@ import {
 	RentalSpace,
 } from "./containers/Public/index.js";
 import Homepage from "./containers/Public/Homepage.jsx";
+import LoginForm from "./components/LoginForm.jsx";
+import DetailPost from "./containers/Public/DetailPost.jsx";
 
 const { store, persistor } = reduxStore();
 createRoot(document.getElementById("root")).render(
@@ -25,10 +26,7 @@ createRoot(document.getElementById("root")).render(
 				<BrowserRouter>
 					<Routes>
 						<Route path={path.HOME} element={<Home />}>
-							<Route
-								path={'*'}
-								element={<Homepage />}
-							/>
+							<Route path={"*"} element={<Homepage />} />
 							<Route
 								path={path.CHO_THUE_CAN_HO}
 								element={<RentalApartment />}
@@ -44,6 +42,15 @@ createRoot(document.getElementById("root")).render(
 							<Route
 								path={path.NHA_CHO_THUE}
 								element={<RentalHouse />}
+							/>
+							<Route path={path.LOGIN} element={<LoginForm />} />
+							<Route
+								path={path.DETAIL_POST}
+								element={<DetailPost />}
+							/>
+							<Route
+								path={"chi-tiet/*"}
+								element={<DetailPost />}
 							/>
 						</Route>
 					</Routes>

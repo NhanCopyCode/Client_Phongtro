@@ -1,8 +1,14 @@
 import PropTypes from "prop-types";
-import { memo } from "react";
+import { memo, useEffect, useMemo, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 
 function Button({
 	children,
+	disabled,
+	number,
+	currentPage,
+	activeClass,
+	shadow,
 	textColor = "text-white",
 	bgColor = "bg-gray-200",
 	rounded = "rounded-xl",
@@ -13,10 +19,16 @@ function Button({
 	iconLeft,
 	iconRight,
 	hoverEffect = "darken",
+	width,
+	height,
 	onClick,
 	onMouseEnter,
 	onMouseLeave,
 }) {
+
+
+	let isActive = +number === +currentPage;
+
 	const validHoverEffect = {
 		none: "hover:[filter:brightness(100%)]",
 		darken: "hover:bg-gray-200",
@@ -34,10 +46,12 @@ function Button({
 
 	const appliedHoverEffect =
 		validHoverEffect[hoverEffect] || validHoverEffect["none"];
+
 	const className = `${appliedSizeButton} flex items-center justify-center
         transition-all duration-200 ease-linear cursor-pointer
         outline-none ${textColor} ${bgColor}  ${fontSize} ${rounded} ${border}
-        ${appliedHoverEffect} 
+        ${appliedHoverEffect} ${shadow} ${isActive ? activeClass : ""} ${disabled ? "cursor-auto pointer-events-none" : ""}
+		${height} ${width}
     `;
 
 	return (
@@ -72,6 +86,12 @@ function Button({
 
 Button.propTypes = {
 	children: PropTypes.string,
+	disabled: PropTypes.bool,
+	number: PropTypes.number,
+	currentPage: PropTypes.number,
+	isActive: PropTypes.bool,
+	activeClass: PropTypes.string,
+	shadow: PropTypes.string,
 	textColor: PropTypes.string,
 	bgColor: PropTypes.string,
 	rounded: PropTypes.string,

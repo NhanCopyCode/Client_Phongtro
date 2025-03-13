@@ -17,6 +17,7 @@
     --color-price: #068906;
     --color-yellow: #FFCE3F;
     --color-subtitle: #adb5bd;
+    --color-overlay: rgba(0, 0, 0, 0.5);
 }
 
 .container {

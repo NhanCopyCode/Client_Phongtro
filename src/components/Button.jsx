@@ -18,7 +18,7 @@ function Button({
 	sizeButton = "md",
 	iconLeft,
 	iconRight,
-	hoverEffect = "darken",
+	hoverEffect = "gray",
 	width,
 	height,
 	onClick,
@@ -29,8 +29,9 @@ function Button({
 
 	const validHoverEffect = {
 		none: "hover:[filter:brightness(100%)]",
-		darken: "hover:bg-gray-200",
+		gray: "hover:bg-gray-200",
 		lighten: "hover:[filter:brightness(140%)]",
+		darken: "hover:[filter:brightness(90%)]",
 	};
 
 	const validSizeButton = {

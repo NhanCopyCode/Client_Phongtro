@@ -9,6 +9,7 @@ import {
 	useNavigate,
 	useSearchParams,
 } from "react-router-dom";
+const postPerPage = +import.meta.env.VITE_NUMBER_OF_POSTS_PER_PAGE;
 
 function Pagination({ currentPage }) {
 	const [searchParams] = useSearchParams();
@@ -19,16 +20,19 @@ function Pagination({ currentPage }) {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const max = Math.floor(count / posts.length);
+		const max = Math.floor(count / postPerPage);
+		console.log("max:", max);
+		console.log("count: ", count);
+		console.log("post length: ", postPerPage);
 		const start = currentPage - 2 <= 0 ? 0 : currentPage - 2;
 		const end = currentPage + 2 >= max ? max : currentPage + 2;
-	const arr = [];
+		const arr = [];
 		for (let i = start; i <= end; i++) {
 			arr.push(i);
 		}
 
 		end === max ? setHideEnd(true) : setHideEnd(false);
-
+		console.log("array: ", arr);
 		setArrPage(arr);
 	}, [count, posts, currentPage]);
 
@@ -65,7 +69,8 @@ function Pagination({ currentPage }) {
 							currentPage={Number(searchParams.get("page")) || 0}
 							activeClass={"!bg-redColor font-medium text-white"}
 							rounded="rounded-sm"
-							shadow="shadow-sm"s
+							shadow="shadow-sm"
+							s
 							textColor="text-text"
 							fontSize="text-sm"
 							bgColor="bg-white"
@@ -101,14 +106,14 @@ function Pagination({ currentPage }) {
 						iconRight={<FaAngleRight />}
 						onClick={() =>
 							handleNavigatePageNumber(
-								Math.floor(count / posts.length)
+								Math.floor(count / postPerPage)
 							)
 						}
 					></Button>
 				</>
 			)}
 			<Button
-				disabled={+currentPage === Math.floor(count / posts.length)}
+				disabled={+currentPage === Math.floor(count / postPerPage)}
 				number={+currentPage + 1}
 				activeClass={"!bg-redColor font-medium text-white"}
 				rounded="rounded-sm"

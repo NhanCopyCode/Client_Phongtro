@@ -10,9 +10,13 @@ const getAllPosts = async () => {
 	}
 };
 
-const apiGetPostLimit = async (page) => {
+const apiGetPostLimit = async ({...query}) => {
 	try {
-		const response = await axios.get(`/api/v1/posts/limit?page=${page}`);
+		const response = await axios({
+			method: "get",
+			url: `/api/v1/posts/limit`,
+			params: query,
+		});
 
 		return response;
 	} catch (error) {

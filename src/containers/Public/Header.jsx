@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +12,7 @@ import * as actions from "../../store/actions";
 import Search from "./Search";
 import { MdOutlineMenu } from "react-icons/md";
 
-function Header() {
+function Header({ onOpenVerticalNav }) {
 	const { isLoggedIn } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -125,6 +126,7 @@ function Header() {
 							}
 							textColor="text-black"
 							bgColor="bg-none"
+							onClick={onOpenVerticalNav}
 						>
 							Danh mục
 						</Button>
@@ -135,5 +137,9 @@ function Header() {
 		</div>
 	);
 }
+
+Header.propTypes = {
+	onOpenVerticalNav: PropTypes.func,
+};
 
 export default Header;

@@ -33,9 +33,9 @@ function ListRental({ page }) {
 
 	useEffect(() => {
 		let offset = page ? +page : 0;
-		dispatch(getPostLimit(offset));
+		dispatch(getPostLimit({ offset, priceCode: "5U7N" }));
 		window.scroll({ top: 0, left: 0, behavior: "smooth" });
-	}, [page]);
+	}, [page, dispatch]);
 
 	return (
 		<div className="w-5xl max-w-[100%] mx-auto mt-8">

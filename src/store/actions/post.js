@@ -27,19 +27,20 @@ export const getPosts = () => async (dispatch) => {
 	}
 };
 
-export const getPostLimit = (page) => async (dispatch) => {
+export const getPostLimit = ({...query}) => async (dispatch) => {
 	try {
-		const response = await postService.apiGetPostLimit(page);
+		console.log("query: ", query);
+		const response = await postService.apiGetPostLimit(query);
 		// console.log(response);
 
-		if (response.data.data) {
+		if (response.data?.data) {
 			dispatch({
 				type: actionTypes.GET_POSTS_LIMIT,
 				payload: {
 					posts: response.data?.data?.rows,
 					count: response.data?.data?.count,
 					message: response.data?.message,
-				},
+				}, 
 			});
 		}
 	} catch (error) {

@@ -1,9 +1,9 @@
 import actionTypes from "./actionTypes";
-import { apiGetPostLimit, getAllPosts } from "../../services/postService";
+import * as postService from "../../services/postService";
 
 export const getPosts = () => async (dispatch) => {
 	try {
-		const response = await getAllPosts();
+		const response = await postService.getAllPosts();
 
 		console.log(response);
 		if (response.data.data) {
@@ -29,7 +29,7 @@ export const getPosts = () => async (dispatch) => {
 
 export const getPostLimit = (page) => async (dispatch) => {
 	try {
-		const response = await apiGetPostLimit(page);
+		const response = await postService.apiGetPostLimit(page);
 		// console.log(response);
 
 		if (response.data.data) {
@@ -51,5 +51,20 @@ export const getPostLimit = (page) => async (dispatch) => {
 				message: null,
 			},
 		});
+	}
+};
+
+export const setPost = (slug) => async (dispatch) => {
+	try {
+		const response = await postService.filterPostService(slug);
+		// dispatch({
+		// 	type: actionTypes.SET_POST,
+		// 	payload: {
+			
+		// 	},
+		// });
+		console.log("response post filter: ", response);
+	} catch (error) {
+		console.log("Error at post action file: ", error);
 	}
 };

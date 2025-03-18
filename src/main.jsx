@@ -52,6 +52,11 @@ createRoot(document.getElementById("root")).render(
 								path={"chi-tiet/*"}
 								element={<DetailPost />}
 							/>
+
+							<Route
+								path={path.FILTER_POST}
+								element={<Homepage />}
+							/>
 						</Route>
 					</Routes>
 				</BrowserRouter>

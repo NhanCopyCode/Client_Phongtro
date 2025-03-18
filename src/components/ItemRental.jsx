@@ -71,11 +71,14 @@ function ItemRental({
 					)}/${id}`}
 					className="text-redColor text-sm uppercase font-medium my-2"
 				>
-					<div className="inline-flex items-center text-yellow me-2 gap-1">
-						{[...Array(star)].map((_, index) => (
-							<FaStar key={index} />
-						))}
-					</div>
+					{[...Array(star)].length > 0 && (
+						<div className="inline-flex items-center text-yellow me-2 gap-1">
+							{[...Array(star)].map((_, index) => (
+								<FaStar key={index} />
+							))}
+						</div>
+					)}
+
 					{title}
 				</Link>
 				<div className="flex items-center space-x-4">

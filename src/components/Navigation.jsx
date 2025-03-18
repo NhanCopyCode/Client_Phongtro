@@ -2,29 +2,24 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import toLowerCaseNonAccentVietnamese from "../utils/convertStringToPath";
-import { apiGetCategories } from "../services/categoryService";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategories } from "../store/actions/app";
 function Navigation() {
-	const [categories, setCategories] = useState([]);
+	const [listCategory, setListCategory] = useState([]);
+	const { categories } = useSelector((state) => state.app);
+	const dispatch = useDispatch();
 	useEffect(() => {
-		// call api service
-		const fetchCategories = async () => {
-			try {
-				const res = await apiGetCategories();
+		dispatch(getAllCategories());
+	}, [dispatch]);
 
-				setCategories(res.data);
-			} catch (error) {
-				console.log("error: ", error);
-			}
-		};
-
-		fetchCategories();
-	}, []);
+	useEffect(() => {
+		setListCategory(categories);
+	}, [categories]);
 	return (
-		<div className="w-full shadow-md relative z-10 bg-white">
+		<div className="w-full shadow-md z-10 bg-white fixed top-[61px] right-0 left-0">
 			<div className="w-5xl flex items-center my-0 mx-auto px-2 max-w-[100%]">
 				<ul className="flex h-full items-center space-x-4 text-[13px] cursor-pointer flex-wrap">
-					{categories.map((item) => (
+					{listCategory.map((item) => (
 						<li key={item.code} className="h-[40px]">
 							<NavLink
 								to={

@@ -1,20 +1,30 @@
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { MdChevronRight } from "react-icons/md";
+import { Link } from "react-router-dom";
+import toLowerCaseNonAccentVietnamese from "../utils/convertStringToPath";
 
-function FilterItem({ value, iconLeft, hoverEffect, children }) {
+function FilterItem({
+	code,
+	iconLeft = <MdChevronRight />,
+	hoverEffect = "hover:text-redColor",
+	children,
+}) {
 	const className = `flex items-center text-text ${hoverEffect}`;
 	return (
-		<NavLink to={value} className={className}>
+		<Link
+			to={'/' + toLowerCaseNonAccentVietnamese(children)}
+			className={className}
+		>
 			{iconLeft}
 			<span className="text-[12px] ">{children}</span>
-		</NavLink>
+		</Link>
 	);
 }
 
 FilterItem.propTypes = {
 	children: PropTypes.string.isRequired,
 	iconLeft: PropTypes.element,
-	value: PropTypes.string,
+	code: PropTypes.string,
 	hoverEffect: PropTypes.string,
 };
 

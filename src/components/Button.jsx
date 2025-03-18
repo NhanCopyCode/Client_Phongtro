@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import { memo, useEffect, useMemo, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { memo } from "react";
 
 function Button({
 	children,
 	disabled,
 	number,
+	subClass,
 	currentPage,
 	activeClass,
 	shadow,
@@ -25,8 +25,6 @@ function Button({
 	onMouseEnter,
 	onMouseLeave,
 }) {
-
-
 	let isActive = +number === +currentPage;
 
 	const validHoverEffect = {
@@ -50,8 +48,10 @@ function Button({
 	const className = `${appliedSizeButton} flex items-center justify-center
         transition-all duration-200 ease-linear cursor-pointer
         outline-none ${textColor} ${bgColor}  ${fontSize} ${rounded} ${border}
-        ${appliedHoverEffect} ${shadow} ${isActive ? activeClass : ""} ${disabled ? "cursor-auto pointer-events-none" : ""}
-		${height} ${width}
+        ${appliedHoverEffect} ${shadow} ${isActive ? activeClass : ""} ${
+		disabled ? "cursor-auto pointer-events-none" : ""
+	}
+		${height} ${width} ${subClass}
     `;
 
 	return (
@@ -90,6 +90,7 @@ Button.propTypes = {
 	number: PropTypes.number,
 	currentPage: PropTypes.number,
 	isActive: PropTypes.bool,
+	subClass: PropTypes.string,
 	activeClass: PropTypes.string,
 	shadow: PropTypes.string,
 	textColor: PropTypes.string,
@@ -99,6 +100,8 @@ Button.propTypes = {
 	fontSize: PropTypes.string,
 	iconLeft: PropTypes.element,
 	iconRight: PropTypes.element,
+	width: PropTypes.string,
+	height: PropTypes.string,
 	widthAndHeightIcon: PropTypes.string,
 	sizeButton: PropTypes.string,
 	hoverEffect: PropTypes.string,

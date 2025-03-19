@@ -16,32 +16,33 @@ function Pagination({ currentPage }) {
 	const { count, posts } = useSelector((state) => state.post);
 	const [arrPage, setArrPage] = useState([]);
 	const [hideEnd, setHideEnd] = useState(false);
+	const [hideStart, setHideStart] = useState(false);
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const max = Math.floor(count / postPerPage);
-		console.log("max:", max);
-		console.log("count: ", count);
-		console.log("post length: ", postPerPage);
+		const max = Math.round(count / postPerPage);
+		console.log("max: ", max);
 		const start = currentPage - 2 <= 0 ? 0 : currentPage - 2;
 		const end = currentPage + 2 >= max ? max : currentPage + 2;
 		const arr = [];
 		for (let i = start; i <= end; i++) {
 			arr.push(i);
 		}
-
+		start === 0 ? setHideStart(true) : setHideStart(false);
 		end === max ? setHideEnd(true) : setHideEnd(false);
-		console.log("array: ", arr);
 		setArrPage(arr);
 	}, [count, posts, currentPage]);
 
 	const handleNavigatePageNumber = (currentActivePage) => {
+		const searchParams = new URLSearchParams(location.search);
+
+		searchParams.set("page", currentActivePage);
+
+		const objSearch = Object.fromEntries(searchParams.entries());
 		navigate({
 			pathname: "/",
-			search: createSearchParams({
-				page: +currentActivePage,
-			}).toString(),
+			search: createSearchParams(objSearch).toString(),
 		});
 	};
 	return (
@@ -60,6 +61,33 @@ function Pagination({ currentPage }) {
 			>
 				Trang trước
 			</Button>
+			{!hideStart && (
+				<>
+					<Button
+						rounded="rounded-sm"
+						shadow="shadow-sm"
+						textColor="text-text"
+						fontSize="text-sm"
+						bgColor="bg-white"
+						hoverEffect="none"
+					>
+						...
+					</Button>
+
+					<Button
+						rounded="rounded-sm"
+						shadow="shadow-sm"
+						textColor="text-text"
+						fontSize="text-sm"
+						bgColor="bg-white"
+						hoverEffect="none"
+						width={"w-[48px]"}
+						height={"h-[36px]"}
+						iconRight={<FaAngleLeft />}
+						onClick={() => handleNavigatePageNumber(0)}
+					></Button>
+				</>
+			)}
 			{arrPage.length > 0 &&
 				arrPage.map((item, index) => {
 					return (
@@ -106,14 +134,14 @@ function Pagination({ currentPage }) {
 						iconRight={<FaAngleRight />}
 						onClick={() =>
 							handleNavigatePageNumber(
-								Math.floor(count / postPerPage)
+								Math.round(count / postPerPage) - 1
 							)
 						}
 					></Button>
 				</>
 			)}
 			<Button
-				disabled={+currentPage === Math.floor(count / postPerPage)}
+				disabled={+currentPage === Math.round(count / postPerPage)}
 				number={+currentPage + 1}
 				activeClass={"!bg-redColor font-medium text-white"}
 				rounded="rounded-sm"

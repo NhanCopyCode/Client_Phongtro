@@ -1,8 +1,27 @@
 import PropTypes from "prop-types";
 
 import FilterItem from "./FilterItem";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function SidebarItem({ title, arrData }) {
+function SidebarItem({ title, arrData, type }) {
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	const handleFilterPost = (code) => {
+		const searchParams = new URLSearchParams(location.search);
+
+		searchParams.set(type, code);
+
+		searchParams.delete("page");
+
+		// dispatch(getPostLimit(objSearch));
+
+		navigate({
+			pathname: "/",
+			search: searchParams.toString(),
+		});
+	};
+
 	return (
 		<div className="w-[100%]">
 			<h3 className="font-medium text-sm text-text">{title}</h3>
@@ -12,7 +31,9 @@ function SidebarItem({ title, arrData }) {
 						<FilterItem
 							key={index}
 							iconLeft={item.icon}
+							type={type}
 							code={item.code}
+							onFilterPost={() => handleFilterPost(item.code)}
 						>
 							{item.value}
 						</FilterItem>
@@ -23,6 +44,7 @@ function SidebarItem({ title, arrData }) {
 }
 
 SidebarItem.propTypes = {
+	type: PropTypes.string,
 	title: PropTypes.string,
 	arrData: PropTypes.array,
 };

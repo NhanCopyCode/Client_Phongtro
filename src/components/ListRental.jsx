@@ -7,7 +7,7 @@ import { memo, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getPostLimit } from "../store/actions/post";
-import Pagination from "./pagination";
+import Pagination from "./Pagination";
 
 const links = [
 	{
@@ -32,10 +32,13 @@ function ListRental({ page }) {
 	const { posts } = useSelector((state) => state.post);
 
 	useEffect(() => {
+		const queryObject = Object.fromEntries(searchParams.entries());
+		delete queryObject.page;
+		// console.log(queryObject);
 		let offset = page ? +page : 0;
-		dispatch(getPostLimit({ offset, priceCode: "5U7N" }));
+		dispatch(getPostLimit({ offset, ...queryObject }));
 		window.scroll({ top: 0, left: 0, behavior: "smooth" });
-	}, [page, dispatch]);
+	}, [page, dispatch, searchParams]);
 
 	return (
 		<div className="w-5xl max-w-[100%] mx-auto mt-8">

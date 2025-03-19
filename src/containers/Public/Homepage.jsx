@@ -10,11 +10,8 @@ function Homepage() {
 	const dispatch = useDispatch();
 	// const { posts } = useSelector(state => state.posts);
 	const [searchParams] = useSearchParams();
-	const { slug } = useParams();
 
-	// useEffect(() => {
-	// 	dispatch(setPost(slug));
-	// }, [slug, dispatch]);
+	
 	return (
 		<>
 			<div className="w-full bg-transparent flex items-center justify-center flex-col mt-4">

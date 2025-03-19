@@ -10,7 +10,7 @@ const getAllPosts = async () => {
 	}
 };
 
-const apiGetPostLimit = async ({...query}) => {
+const apiGetPostLimit = async (query) => {
 	try {
 		const response = await axios({
 			method: "get",

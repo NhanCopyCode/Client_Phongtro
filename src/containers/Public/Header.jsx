@@ -11,11 +11,16 @@ import { useCallback } from "react";
 import * as actions from "../../store/actions";
 import Search from "./Search";
 import { MdOutlineMenu } from "react-icons/md";
+import { getPostLimit } from "../../store/actions/post";
 
 function Header({ onOpenVerticalNav }) {
 	const { isLoggedIn } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
+	const handleRenderPost = () => {
+		dispatch(getPostLimit());
+	};
 
 	const handleNavigateLogin = useCallback(
 		(flag) => {
@@ -37,7 +42,7 @@ function Header({ onOpenVerticalNav }) {
 		<div className="bg-white fixed top-0 right-0 left-0 z-10">
 			<div className="w-5xl flex justify-between items-center my-0 mx-auto border-b-[1px] border-borderColor px-2 max-w-[100%]">
 				<div className="flex items-center space-x-2">
-					<Link to={"/"}>
+					<Link to={"/"} onClick={handleRenderPost}>
 						<img
 							src={Logo}
 							alt="Logo"
@@ -83,7 +88,7 @@ function Header({ onOpenVerticalNav }) {
 									textColor="text-white"
 									bgColor="bg-primary"
 									widthAndHeightIcon={"w-[18px] h-[18px]"}
-									hoverEffect="lighten"
+									hoverEffect="darken"
 									sizeButton="md"
 									onClick={() => handleNavigateLogin(false)}
 								>
@@ -96,7 +101,7 @@ function Header({ onOpenVerticalNav }) {
 									textColor="text-white"
 									bgColor="bg-primary"
 									widthAndHeightIcon={"w-[18px] h-[18px]"}
-									hoverEffect="lighten"
+									hoverEffect="darken"
 									sizeButton="md"
 									onClick={() => handleNavigateLogin(true)}
 								>

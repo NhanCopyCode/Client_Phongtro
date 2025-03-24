@@ -21,9 +21,11 @@ function Pagination({ currentPage }) {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const max = Math.round(count / postPerPage);
+		const max = Math.ceil(count / postPerPage);
+		console.log("number page: ", count / postPerPage);
+		console.log("max: ", max);
 		const start = currentPage - 2 <= 0 ? 0 : currentPage - 2;
-		const end = currentPage + 2 >= max - 1 ? max - 1: currentPage + 2;
+		const end = currentPage + 2 >= max - 1 ? max - 1 : currentPage + 2;
 		const arr = [];
 		for (let i = start; i <= end; i++) {
 			arr.push(i);
@@ -133,14 +135,14 @@ function Pagination({ currentPage }) {
 						iconRight={<FaAngleRight />}
 						onClick={() =>
 							handleNavigatePageNumber(
-								Math.round(count / postPerPage) - 1
+								Math.ceil(count / postPerPage) - 1
 							)
 						}
 					></Button>
 				</>
 			)}
 			<Button
-				disabled={+currentPage === Math.round(count / postPerPage) - 1}
+				disabled={+currentPage === Math.ceil(count / postPerPage) - 1}
 				number={+currentPage + 1}
 				activeClass={"!bg-redColor font-medium text-white"}
 				rounded="rounded-sm"

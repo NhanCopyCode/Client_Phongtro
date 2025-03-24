@@ -32,7 +32,7 @@ function DetailPost() {
 			<BreadCrumb />
 
 			<div className="grid grid-cols-12 gap-2">
-				<div className="col-span-8">
+				<div className="xl:col-span-8 col-span-12">
 					{post.images?.image && post.images?.image.length > 0 && (
 						<div className="rounded-md shadow-sm bg-white overflow-hidden ">
 							Xin chào
@@ -197,7 +197,7 @@ function DetailPost() {
 					</div>
 				</div>
 
-				<div className="col-span-4">
+				<div className="xl:col-span-4 col-span-12">
 					<div className="bg-white rounded-sm shadow-sm px-4 py-6  flex flex-col items-center justify-center text-text ">
 						<div className="w-[100px] h-[100px] rounded-[50%] border-1 border-[#d5dbdf] p-1">
 							<img

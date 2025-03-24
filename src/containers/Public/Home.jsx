@@ -5,6 +5,7 @@ import SearchBottom from "./SearchBottom";
 import VerticalNavigation from "../../components/VerticalNavigation";
 import { useState } from "react";
 import Overlay from "../../components/Overlay";
+import Footer from "./Footer";
 
 function Home() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +32,7 @@ function Home() {
 
 			<SearchBottom />
 			<Outlet />
+			<Footer />
 		</div>
 	);
 }

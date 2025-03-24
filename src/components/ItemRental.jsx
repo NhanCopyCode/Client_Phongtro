@@ -64,12 +64,12 @@ function ItemRental({
 			</div>
 
 			{/* Content */}
-			<div className="">
+			<div className="mt-1">
 				<Link
 					to={`chi-tiet/${toLowerCaseNonAccentVietnamese(
 						title
-					)}/${id}`}
-					className="text-redColor text-sm uppercase font-medium my-2"
+					).replace("/", "")}/${id}`}
+					className="text-redColor text-sm uppercase font-medium my-3"
 				>
 					{[...Array(star)].length > 0 && (
 						<div className="inline-flex items-center text-yellow me-2 gap-1">

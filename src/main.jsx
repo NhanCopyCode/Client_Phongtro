@@ -53,10 +53,7 @@ createRoot(document.getElementById("root")).render(
 								element={<DetailPost />}
 							/>
 
-							<Route
-								path={path.FILTER_POST}
-								element={<Homepage />}
-							/>
+							
 						</Route>
 					</Routes>
 				</BrowserRouter>

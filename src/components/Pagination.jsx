@@ -22,15 +22,14 @@ function Pagination({ currentPage }) {
 
 	useEffect(() => {
 		const max = Math.round(count / postPerPage);
-		console.log("max: ", max);
 		const start = currentPage - 2 <= 0 ? 0 : currentPage - 2;
-		const end = currentPage + 2 >= max ? max : currentPage + 2;
+		const end = currentPage + 2 >= max - 1 ? max - 1: currentPage + 2;
 		const arr = [];
 		for (let i = start; i <= end; i++) {
 			arr.push(i);
 		}
 		start === 0 ? setHideStart(true) : setHideStart(false);
-		end === max ? setHideEnd(true) : setHideEnd(false);
+		end === max - 1 ? setHideEnd(true) : setHideEnd(false);
 		setArrPage(arr);
 	}, [count, posts, currentPage]);
 
@@ -141,7 +140,7 @@ function Pagination({ currentPage }) {
 				</>
 			)}
 			<Button
-				disabled={+currentPage === Math.round(count / postPerPage)}
+				disabled={+currentPage === Math.round(count / postPerPage) - 1}
 				number={+currentPage + 1}
 				activeClass={"!bg-redColor font-medium text-white"}
 				rounded="rounded-sm"

@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
-import Logo from "../../assets/logo-phongtro.svg";
+import Logo from '../../assets/logo-phongtro.svg';
 import { CiFolderOn, CiHeart, CiLogin, CiLogout } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { Button } from "../../components";

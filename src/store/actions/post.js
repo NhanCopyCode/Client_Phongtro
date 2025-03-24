@@ -5,7 +5,6 @@ export const getPosts = () => async (dispatch) => {
 	try {
 		const response = await postService.getAllPosts();
 
-		console.log(response);
 		if (response.data.data) {
 			dispatch({
 				type: actionTypes.GET_POSTS,
@@ -31,7 +30,6 @@ export const getPostLimit = (query) => async (dispatch) => {
 	try {
 		const response = await postService.apiGetPostLimit(query);
 		// console.log(response);
-
 		if (response.data?.data) {
 			dispatch({
 				type: actionTypes.GET_POSTS_LIMIT,

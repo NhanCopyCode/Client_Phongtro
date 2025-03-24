@@ -24,6 +24,16 @@ const apiGetPostLimit = async (query) => {
 	}
 };
 
+const getPostByIdService = async (id) => {
+	try {
+		const response = await axios.get(`/api/v1/posts/filter/${id}`);
+
+		return response;
+	} catch (error) {
+		console.log("Error at post service file: ", error);
+	}
+}
+
 const filterPostService = async (slug) => {
 	try {
 		const response = await axios.get(`/api/v1/posts/filter/${slug}`);
@@ -32,4 +42,4 @@ const filterPostService = async (slug) => {
 		console.log("Error at post service file: ", error);
 	}
 };
-export { getAllPosts, apiGetPostLimit, filterPostService };
+export { getAllPosts, apiGetPostLimit, filterPostService, getPostByIdService };

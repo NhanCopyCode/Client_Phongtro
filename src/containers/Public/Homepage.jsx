@@ -2,15 +2,14 @@ import { text } from "../../utils/constants";
 import Provinces from "../../components/Provinces";
 import ListRental from "../../components/ListRental";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPost } from "../../store/actions/post";
+import { SlUserFollowing } from "react-icons/sl";
 
 function Homepage() {
 	const dispatch = useDispatch();
 	// const { posts } = useSelector(state => state.posts);
 	const [searchParams] = useSearchParams();
-
+	const { slug } = useParams();
 	
 	return (
 		<>

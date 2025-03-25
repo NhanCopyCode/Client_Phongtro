@@ -6,12 +6,14 @@ import Button from "./Button";
 import { useSelector } from "react-redux";
 import {
 	createSearchParams,
+	useLocation,
 	useNavigate,
 	useSearchParams,
 } from "react-router-dom";
 const postPerPage = +import.meta.env.VITE_NUMBER_OF_POSTS_PER_PAGE;
 
 function Pagination({ currentPage }) {
+	const location = useLocation();
 	const [searchParams] = useSearchParams();
 	const { count, posts } = useSelector((state) => state.post);
 	const [arrPage, setArrPage] = useState([]);
@@ -40,7 +42,7 @@ function Pagination({ currentPage }) {
 
 		const objSearch = Object.fromEntries(searchParams.entries());
 		navigate({
-			pathname: "/",
+			pathname: location.pathname,
 			search: createSearchParams(objSearch).toString(),
 		});
 	};

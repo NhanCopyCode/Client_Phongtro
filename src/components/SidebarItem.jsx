@@ -15,9 +15,8 @@ function SidebarItem({ title, arrData, type }) {
 		searchParams.delete("page");
 
 		// dispatch(getPostLimit(objSearch));
-
 		navigate({
-			pathname: "/",
+			pathname: location.pathname,
 			search: searchParams.toString(),
 		});
 	};

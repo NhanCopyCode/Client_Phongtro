@@ -23,7 +23,7 @@ const links = [
 	},
 ];
 
-function ListRental() {
+function ListRental({ categoryCode }) {
 	const [searchParams] = useSearchParams();
 
 	const location = useLocation();
@@ -35,13 +35,13 @@ function ListRental() {
 		let offset = Number(searchParams.get("page"))
 			? Number(searchParams.get("page"))
 			: 0;
+
+		categoryCode ? (queryObject.categoryCode = categoryCode) : null;
 		dispatch(getPostLimit({ offset, ...queryObject }));
 		window.scroll({ top: 0, left: 0, behavior: "smooth" });
-	}, [dispatch, searchParams]);
+	}, [dispatch, searchParams, categoryCode]);
 
-	useEffect(() => {
-		console.log("location: ", location);
-	}, [location])
+	console.log("category code in list rental: ", categoryCode);
 
 	return (
 		<div className="w-5xl max-w-[100%] mx-auto mt-8">

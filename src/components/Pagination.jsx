@@ -22,8 +22,6 @@ function Pagination({ currentPage }) {
 
 	useEffect(() => {
 		const max = Math.ceil(count / postPerPage);
-		console.log("number page: ", count / postPerPage);
-		console.log("max: ", max);
 		const start = currentPage - 2 <= 0 ? 0 : currentPage - 2;
 		const end = currentPage + 2 >= max - 1 ? max - 1 : currentPage + 2;
 		const arr = [];

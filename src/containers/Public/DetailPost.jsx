@@ -19,6 +19,8 @@ function DetailPost() {
 	const [post, setPost] = useState({});
 
 	useEffect(() => {
+		window.scroll({ top: 0, left: 0, behavior: "smooth" });
+
 		const fetchPostById = async () => {
 			const postFound = await postService.getPostByIdService(postId);
 			setPost(postFound.data.data);
@@ -26,9 +28,8 @@ function DetailPost() {
 
 		fetchPostById();
 	}, [postId]);
-
 	return (
-		<div className="w-5xl m-auto mt-4">
+		<div className="w-5xl max-w-[100%] m-auto mt-4">
 			<BreadCrumb />
 
 			<div className="grid grid-cols-12 gap-2">
@@ -234,7 +235,9 @@ function DetailPost() {
 							hoverEffect="none"
 							bgColor="bg-primary"
 							fontSize="text-[16px]"
-							iconLeft={<MdOutlineMessage className="text-[20px]"/>}
+							iconLeft={
+								<MdOutlineMessage className="text-[20px]" />
+							}
 						>
 							Nhắn Zalo
 						</Button>
@@ -244,7 +247,7 @@ function DetailPost() {
 						<h3 className="text-sm text-text font-medium">
 							Tin đăng nổi bật
 						</h3>
-						<div className="flex flex-col items-center space-y-3 mt-3">
+						<div className="flex flex-col space-y-3 mt-3">
 							<div className="inline-flex items-center">
 								<div className="w-[90px] h-[80px] flex-none">
 									<img

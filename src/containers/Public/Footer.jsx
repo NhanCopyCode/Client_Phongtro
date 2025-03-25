@@ -1,19 +1,25 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 function Footer() {
 	const [isShowMore, setShowMore] = useState(true);
 	const { categories } = useSelector((state) => state.app);
-	console.log("categories:", categories);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		
+	}, [dispatch])
+
 	const handleShowMore = () => {
 		setShowMore(false);
 	};
+
 	const classShow = `bg-white p-4 shadow-sm rounded-sm text-[13px] flex flex-col gap-3 my-4 relative overflow-hidden ${
 		isShowMore ? "max-h-[350px]" : ""
 	}`;
 	return (
-		<div className="w-5xl mx-auto max-w-[100%]">
+		<div className="w-5xl mx-auto max-w-[100%] pb-4">
 			<div className={classShow}>
 				{isShowMore && (
 					<div className="inline-flex items-center justify-center w-[100%] absolute bottom-0 py-12 bg-gradient-to-b from-transparent to-white">
@@ -111,12 +117,12 @@ function Footer() {
 					Phongtro123.com tự hào là trang web đứng top google về các
 					từ khóa:{" "}
 					{categories.map((category, index) => (
-						<>
-							<Link key={index} to={"/" + category.code} className="text-primary cursor-pointer hover:text-redColor">
+						<React.Fragment key={index}>
+							<Link  to={"/" + category.code} className="text-primary cursor-pointer hover:text-redColor">
 								{category.value.toLowerCase()}
 							</Link>
 							{index < categories.length - 1 && ", "}
-						</>
+						</React.Fragment>
 					))}
 					...Vì vậy tin của bạn đăng trên website sẽ tiếp cận được với
 					nhiều khách hàng hơn, do đó giao dịch nhanh hơn, tiết kiệm

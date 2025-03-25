@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import ItemRental from "./ItemRental";
 import { FaCaretDown } from "react-icons/fa";
@@ -24,21 +23,25 @@ const links = [
 	},
 ];
 
-function ListRental({ page }) {
+function ListRental() {
 	const [searchParams] = useSearchParams();
 
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const { posts } = useSelector((state) => state.post);
-
 	useEffect(() => {
 		const queryObject = Object.fromEntries(searchParams.entries());
 		delete queryObject.page;
-		// console.log(queryObject);
-		let offset = page ? +page : 0;
+		let offset = Number(searchParams.get("page"))
+			? Number(searchParams.get("page"))
+			: 0;
 		dispatch(getPostLimit({ offset, ...queryObject }));
 		window.scroll({ top: 0, left: 0, behavior: "smooth" });
-	}, [page, dispatch, searchParams]);
+	}, [dispatch, searchParams]);
+
+	useEffect(() => {
+		console.log("location: ", location);
+	}, [location])
 
 	return (
 		<div className="w-5xl max-w-[100%] mx-auto mt-8">
@@ -116,9 +119,5 @@ function ListRental({ page }) {
 		</div>
 	);
 }
-
-ListRental.propTypes = {
-	page: PropTypes.string,
-};
 
 export default memo(ListRental);

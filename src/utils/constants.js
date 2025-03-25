@@ -8,10 +8,33 @@ export const path = {
 	DETAIL_POST: "chi-tiet/:title/:postId",
 };
 
-export const text = {
-	HOME_TITLE: "Cho Thuê Căn Hộ Chung Cư, Giá Rẻ, View Đẹp, Mới Nhất 2025",
-	HOME_SUB_TITLE: "Có 25.538 tin đăng cho thuê",
-};
+export const text = [
+	{
+		PAGE_URL: "/",
+		HOME_TITLE: "Cho Thuê Căn Hộ Chung Cư, Giá Rẻ, View Đẹp, Mới Nhất 2025",
+		HOME_SUB_TITLE: "Có 25.538 tin đăng cho thuê",
+	},
+	{
+		PAGE_URL: path.CHO_THUE_CAN_HO,
+		HOME_TITLE: "Cho Thuê Nhà Nguyên Căn, Giá Rẻ, Chính Chủ, Mới Nhất 2025",
+		HOME_SUB_TITLE: "Có 10.199 tin đăng cho thuê",
+	},
+	{
+		PAGE_URL: path.CHO_THUE_MAT_BANG,
+		HOME_TITLE: "Cho Thuê Mặt Bằng, Giá Rẻ, Chính Chủ, Mới Nhất 2025",
+		HOME_SUB_TITLE: "Có 3.342 tin đăng cho thuê",
+	},
+	{
+		PAGE_URL: path.CHO_THUE_PHONG_TRO,
+		HOME_TITLE: "Kênh thông tin Phòng trọ số 1 Việt Nam",
+		HOME_SUB_TITLE: "Có 70.904 tin đăng cho thuê",
+	},
+	{
+		PAGE_URL: path.NHA_CHO_THUE,
+		HOME_TITLE: "Cho Thuê Nhà Nguyên Căn, Giá Rẻ, Chính Chủ, Mới Nhất 2025",
+		HOME_SUB_TITLE: "Có 10.200 tin đăng cho thuê",
+	},
+];
 
 export const locations = [
 	{

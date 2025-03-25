@@ -32,7 +32,7 @@ const getPostByIdService = async (id) => {
 	} catch (error) {
 		console.log("Error at post service file: ", error);
 	}
-}
+};
 
 const filterPostService = async (slug) => {
 	try {
@@ -42,4 +42,20 @@ const filterPostService = async (slug) => {
 		console.log("Error at post service file: ", error);
 	}
 };
-export { getAllPosts, apiGetPostLimit, filterPostService, getPostByIdService };
+
+const getNewPostService = async () => {
+	try {
+		const response = await axios.get("/api/v1/posts/newPost");
+
+		return response;
+	} catch (error) {
+		console.log("Error at post service file: ", error);
+	}
+};
+export {
+	getAllPosts,
+	apiGetPostLimit,
+	filterPostService,
+	getPostByIdService,
+	getNewPostService,
+};

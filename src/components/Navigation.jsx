@@ -15,6 +15,7 @@ function Navigation() {
 	useEffect(() => {
 		setListCategory(categories);
 	}, [categories]);
+
 	return (
 		<div className="w-full shadow-md z-10 bg-white fixed top-[61px] right-0 left-0">
 			<div className="w-5xl flex items-center my-0 mx-auto px-2 max-w-[100%]">

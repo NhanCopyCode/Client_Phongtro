@@ -37,7 +37,7 @@ export const getPostLimit = (query) => async (dispatch) => {
 					posts: response.data?.data?.rows,
 					count: response.data?.data?.count,
 					message: response.data?.message,
-				}, 
+				},
 			});
 		}
 	} catch (error) {
@@ -52,17 +52,24 @@ export const getPostLimit = (query) => async (dispatch) => {
 	}
 };
 
-export const setPost = (slug) => async (dispatch) => {
+export const getNewPost = () => async (dispatch) => {
 	try {
-		const response = await postService.filterPostService(slug);
-		// dispatch({
-		// 	type: actionTypes.SET_POST,
-		// 	payload: {
-			
-		// 	},
-		// });
-		console.log("response post filter: ", response);
+		const response = await postService.getNewPostService();
+
+		if (response.data.data) {
+			dispatch({
+				type: actionTypes.GET_NEW_POST,
+				payload: {
+					newPosts: response.data?.data,
+					message: response.data?.message,
+				},
+			});
+		}
 	} catch (error) {
 		console.log("Error at post action file: ", error);
+		dispatch({
+			type: actionTypes.GET_NEW_POST,
+			payload: {},
+		});
 	}
 };

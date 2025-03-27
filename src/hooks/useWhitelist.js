@@ -14,19 +14,15 @@ const useWhitelist = () => {
 
 	// Sync state with localStorage changes (optional, for debugging)
 	useEffect(() => {
-		console.log("Current whitelist state:", whitelist);
 	}, [whitelist]);
 
 	const addToWhitelist = (post) => {
 		// Validate post
 		if (!post || !post.id) {
-			console.error("Invalid post object:", post);
 			return;
 		}
 
 		setWhitelist((prevWhitelist) => {
-			console.log("Adding post:", post);
-			console.log("Previous whitelist:", prevWhitelist);
 
 			// Ensure prevWhitelist is an array
 			const currentWhitelist = Array.isArray(prevWhitelist)
@@ -36,7 +32,6 @@ const useWhitelist = () => {
 			// Check if post already exists
 			if (!currentWhitelist.find((item) => item.id === post.id)) {
 				const newWhitelist = [...currentWhitelist, post];
-				console.log("New whitelist:", newWhitelist);
 
 				try {
 					localStorage.setItem(
@@ -48,7 +43,6 @@ const useWhitelist = () => {
 				}
 				return newWhitelist;
 			} else {
-				console.log("Post already in whitelist");
 				return currentWhitelist;
 			}
 		});

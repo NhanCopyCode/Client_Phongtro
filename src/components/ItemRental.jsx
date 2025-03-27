@@ -1,29 +1,24 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 
-import { CiHeart } from "react-icons/ci";
-import { FaCamera, FaStar } from "react-icons/fa";
+import { FaCamera, FaHeart, FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdOutlinePhone } from "react-icons/md";
 
 import Button from "../components/Button";
 import toLowerCaseNonAccentVietnamese from "../utils/convertStringToPath";
-import useWhitelist from "../hooks/useWhitelist";
 import { WHITELIST_KEY } from "../utils/constants";
-function ItemRental({ post }) {
-	const { addToWhitelist } = useWhitelist();
-	const [isHover, setHover] = useState(false);
-	const handleMouseEnter = () => {
-		setHover(true);
-	};
-	const handleMouseLeave = () => {
-		setHover(false);
-	};
+import { useEffect, useState } from "react";
+function ItemRental({ post, isInWhitelist }) {
+	const [activeHeart, setActiveHeart] = useState(isInWhitelist || false);
 	const handleAddItemToWhiteList = (post) => {
-		const whitelist_posts =
+		setActiveHeart(true);
+		let whitelist_posts =
 			JSON.parse(localStorage.getItem(WHITELIST_KEY)) || [];
-		if (whitelist_posts.find(item => item.id === post.id)) {
-			whitelist_posts.filter((item) => item.id !== post.id);
+		if (whitelist_posts.find((item) => item.id === post.id)) {
+			whitelist_posts = whitelist_posts.filter(
+				(item) => item.id !== post.id
+			);
+			setActiveHeart(false);
 		} else {
 			whitelist_posts.push(post);
 		}
@@ -33,6 +28,14 @@ function ItemRental({ post }) {
 			JSON.stringify(whitelist_posts)
 		);
 	};
+
+	useEffect(() => {
+		const whitelist_posts = JSON.parse(localStorage.getItem(WHITELIST_KEY)) || [];
+		if(whitelist_posts.find(item => item.id === post.id)) {
+			setActiveHeart(true);
+		}
+	}, [])
+
 	return (
 		<div className="bg-white shadow-sm rounded-sm p-3">
 			{/* 4 images */}
@@ -104,10 +107,10 @@ function ItemRental({ post }) {
 				</div>
 
 				<div className="text-[12px] text-subtitle my-2 line-clamp-2">
-					{post.description}
+					{JSON.parse(post.description).join(" ")}
 				</div>
 
-				<div className="flex items-center justify-between  mt-4">
+				<div className="flex items-center justify-between mt-4">
 					<div className="flex items-center gap-2">
 						<div className="p-1 border border-subtitle rounded-[50%] w-10 h-10">
 							<img
@@ -140,17 +143,20 @@ function ItemRental({ post }) {
 						</Button>
 						<Button
 							iconLeft={
-								isHover ? (
-									<CiHeart className="text-lg" color="red" />
-								) : (
-									<CiHeart className="text-lg" />
-								)
+								// isHover ? (
+								// 	<CiHeart className="text-lg" color="red"/>
+								// ) : (
+								// 	<CiHeart className="text-lg" />
+								// )
+								<FaHeart
+									className={`text-lg hover:text-redColor ${
+										activeHeart && "text-redColor"
+									}`}
+								/>
 							}
 							textColor="text-text text-xl font-bold"
 							bgColor="bg-none"
 							sizeButton="md"
-							onMouseEnter={handleMouseEnter}
-							onMouseLeave={handleMouseLeave}
 							onClick={() => handleAddItemToWhiteList(post)}
 						/>
 					</div>

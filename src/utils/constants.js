@@ -125,3 +125,34 @@ export const filterAcreage = {
 };
 
 export const viewByRegionTitle = "Xem theo khu vực";
+
+
+export const customStylesModal = {
+	content: {
+		background: "white",
+		top: "50%",
+		left: "50%",
+		right: "auto",
+		bottom: "auto",
+		marginRight: "-50%",
+		transform: "translate(-50%, -50%)",
+		width: "600px",
+		height: "600px",
+		overFlowY: "auto",
+		borderRadius: "12px",
+		color: "#212529",
+		padding: 0,
+	},
+	overlay: {
+		position: "fixed",
+		zIndex: 1020,
+		top: 0,
+		left: 0,
+		width: "100vw",
+		height: "100vh",
+		background: "rgba(0,0,0,0.5)",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+};

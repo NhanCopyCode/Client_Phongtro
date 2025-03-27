@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import toLowerCaseNonAccentVietnamese from "../utils/convertStringToPath";
 import formatTimeFromNow from "../utils/formatTimeFromNow";
 function NewPostItem({ image, to, title, price, createdAt }) {
-
 	return (
 		<NavLink
-			to={"chi-tiet/" + toLowerCaseNonAccentVietnamese(title) + "/" + to}
+			to={"/chi-tiet/" + toLowerCaseNonAccentVietnamese(title) + "/" + to}
 			className={"flex items-center gap-2"}
 		>
 			<div className="w-[90px] h-[80px]">

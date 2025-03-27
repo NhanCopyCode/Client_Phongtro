@@ -76,7 +76,7 @@ function ItemRental({ post, isInWhitelist }) {
 			{/* Content */}
 			<div className="mt-1">
 				<Link
-					to={`chi-tiet/${toLowerCaseNonAccentVietnamese(
+					to={`/chi-tiet/${toLowerCaseNonAccentVietnamese(
 						post.title
 					).replace("/", "")}/${post.id}`}
 					className="text-redColor text-sm uppercase font-medium my-3"

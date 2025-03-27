@@ -4,63 +4,33 @@ import Button from "../../components/Button";
 import { useState } from "react";
 
 import { LiaTimesSolid } from "react-icons/lia";
-import { MdOutlineHomeWork, MdOutlinePeopleOutline } from "react-icons/md";
-import { PiBuildingApartmentFill } from "react-icons/pi";
-import { IoIosCheckmark } from "react-icons/io";
-
+import { customStylesModal } from "../../utils/constants";
+import { useSelector } from "react-redux";
 Modal.setAppElement("#root");
-const customStyles = {
-	content: {
-		background: "white",
-		top: "50%",
-		left: "50%",
-		right: "auto",
-		bottom: "auto",
-		marginRight: "-50%",
-		transform: "translate(-50%, -50%)",
-		width: "600px",
-		height: "600px",
-		overFlowY: "auto",
-		borderRadius: "12px",
-		color: "#212529",
-		padding: 0,
-	},
-	overlay: {
-		position: "fixed",
-		zIndex: 1020,
-		top: 0,
-		left: 0,
-		width: "100vw",
-		height: "100vh",
-		background: "rgba(0,0,0,0.5)",
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-};
 
-const rentalCategories = [
-	{
-		name: "Phòng trọ",
-		icon: <MdOutlineHomeWork className="w-full h-full" />,
-	},
-	{
-		name: "Nhà riêng",
-		icon: <MdOutlineHomeWork className="w-full h-full" />,
-	},
-	{
-		name: "Ở ghép",
-		icon: <MdOutlinePeopleOutline className="w-full h-full" />,
-	},
-	{
-		name: "Cho thuê mặt bằng",
-		icon: <PiBuildingApartmentFill className="w-full h-full" />,
-	},
-];
+// const rentalCategories = [
+// 	{
+// 		name: "Phòng trọ",
+// 		icon: <MdOutlineHomeWork className="w-full h-full" />,
+// 	},
+// 	{
+// 		name: "Nhà riêng",
+// 		icon: <MdOutlineHomeWork className="w-full h-full" />,
+// 	},
+// 	{
+// 		name: "Ở ghép",
+// 		icon: <MdOutlinePeopleOutline className="w-full h-full" />,
+// 	},
+// 	{
+// 		name: "Cho thuê mặt bằng",
+// 		icon: <PiBuildingApartmentFill className="w-full h-full" />,
+// 	},
+// ];
 
 function Search() {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [activeButton, setActiveButton] = useState("");
+	const { categories, prices, acreages } = useSelector((state) => state.app);
 
 	const handleOpenModalSearch = () => {
 		setModalIsOpen(true);
@@ -70,9 +40,10 @@ function Search() {
 		setModalIsOpen(false);
 	}
 
-	const handleActiveButton = (name) => {
-		setActiveButton(name);
+	const handleActiveButton = (code) => {
+		setActiveButton(code);
 	};
+
 
 	return (
 		<div className="">
@@ -89,7 +60,7 @@ function Search() {
 			<Modal
 				isOpen={modalIsOpen}
 				onRequestClose={closeModal}
-				style={customStyles}
+				style={customStylesModal}
 				contentLabel="Example Modal"
 			>
 				<div className="relative h-[100%]">
@@ -106,9 +77,10 @@ function Search() {
 					</div>
 					<div className="py-5 px-5">
 						<h3 className="text-lg mb-3">Danh mục cho thuê</h3>
+
 						<div className="flex items-center space-x-2 flex-wrap">
-							{rentalCategories.length > 0 &&
-								rentalCategories.map((item) => (
+							{categories.length > 0 &&
+								categories.map((item) => (
 									<div
 										key={item.name}
 										className="relative overflow-hidden mb-2"
@@ -116,7 +88,7 @@ function Search() {
 										<Button
 											iconLeft={item.icon}
 											border={
-												activeButton === item.name
+												activeButton === item.code
 													? "border border-redColor text-redColor"
 													: "border border-[#ddd]"
 											}
@@ -125,21 +97,81 @@ function Search() {
 											rounded="rounded-2xl"
 											subClass={""}
 											onClick={() =>
-												handleActiveButton(item.name)
+												handleActiveButton(item.code)
 											}
 										>
-											{item.name}
+											{item.value}
 										</Button>
 									</div>
 								))}
 						</div>
 
-						<h3 className="text-lg mb- mt-4">Khoảng giá</h3>
-						<div className="flex items-center space-x-2 flex-wrap"></div>
+						<h3 className="text-lg mb- my-4">Khoảng giá</h3>
+						<div className="flex items-center space-x-2 flex-wrap">
+							{prices.length > 0 &&
+								prices.map((item) => (
+									<div
+										key={item.name}
+										className="relative overflow-hidden mb-2"
+									>
+										<Button
+											iconLeft={item.icon}
+											border={
+												activeButton === item.code
+													? "border border-redColor text-redColor"
+													: "border border-[#ddd]"
+											}
+											bgColor="bg-white"
+											textColor="text-black"
+											rounded="rounded-2xl"
+											subClass={""}
+											onClick={() =>
+												handleActiveButton(item.code)
+											}
+										>
+											{item.value}
+										</Button>
+									</div>
+								))}
+						</div>
+						<h3 className="text-lg mb- my-4">Diện tích</h3>
+						<div className="flex items-center space-x-2 flex-wrap">
+							{acreages.length > 0 &&
+								acreages.map((item) => (
+									<div
+										key={item.name}
+										className="relative overflow-hidden mb-2"
+									>
+										<Button
+											iconLeft={item.icon}
+											border={
+												activeButton === item.code
+													? "border border-redColor text-redColor"
+													: "border border-[#ddd]"
+											}
+											bgColor="bg-white"
+											textColor="text-black"
+											rounded="rounded-2xl"
+											subClass={""}
+											onClick={() =>
+												handleActiveButton(item.code)
+											}
+										>
+											{item.value}
+										</Button>
+									</div>
+								))}
+						</div>
 					</div>
 
 					<div className="absolute bottom-0 right-0 left-0 shadow-lg px-5 py-3 border-t-2 border-t-[#ccc]">
-						<Button bgColor="bg-redColor ">Áp dụng</Button>
+						<Button
+							bgColor="bg-redColor w-[100%]"
+							fontSize="text-[18px]"
+							hoverEffect="none"
+						>
+							Áp dụng
+						</Button>
 					</div>
 				</div>
 			</Modal>

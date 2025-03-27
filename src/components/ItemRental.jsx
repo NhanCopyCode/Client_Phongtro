@@ -8,17 +8,10 @@ import { MdOutlinePhone } from "react-icons/md";
 
 import Button from "../components/Button";
 import toLowerCaseNonAccentVietnamese from "../utils/convertStringToPath";
-
-function ItemRental({
-	address,
-	attributes,
-	description,
-	images,
-	star,
-	title,
-	user,
-	id,
-}) {
+import useWhitelist from "../hooks/useWhitelist";
+import { WHITELIST_KEY } from "../utils/constants";
+function ItemRental({ post }) {
+	const { addToWhitelist } = useWhitelist();
 	const [isHover, setHover] = useState(false);
 	const handleMouseEnter = () => {
 		setHover(true);
@@ -26,24 +19,19 @@ function ItemRental({
 	const handleMouseLeave = () => {
 		setHover(false);
 	};
-
-	const handleAddItemToWhiteList = (id) => {
-		if (localStorage.getItem("whitelist_posts")) {
-			const whitelist_posts = localStorage.getItem("whitelist_posts");
-			if (whitelist_posts.find((item) => item === id)) {
-				localStorage.setItem(
-					"whitelist_posts",
-					whitelist_posts.filter((item) => item !== id)
-				);
-			} else {
-				localStorage.setItem(
-					"whitelist_posts",
-					whitelist_posts.push(id)
-				);
-			}
+	const handleAddItemToWhiteList = (post) => {
+		const whitelist_posts =
+			JSON.parse(localStorage.getItem(WHITELIST_KEY)) || [];
+		if (whitelist_posts.find(item => item.id === post.id)) {
+			whitelist_posts.filter((item) => item.id !== post.id);
 		} else {
-			localStorage.setItem("whitelist_posts", [id]);
+			whitelist_posts.push(post);
 		}
+
+		localStorage.setItem(
+			"whitelist_posts",
+			JSON.stringify(whitelist_posts)
+		);
 	};
 	return (
 		<div className="bg-white shadow-sm rounded-sm p-3">
@@ -52,25 +40,25 @@ function ItemRental({
 				<div className="w-3/5 h-full">
 					<img
 						className="w-full h-full object-cover"
-						src={images[0]}
+						src={JSON.parse(post?.images.image)[0]}
 						alt=""
 					/>
 				</div>
 				<div className="w-2/5 h-full flex items-center flex-col gap-1 overflow-hidden">
 					<img
 						className="w-full h-full object-cover max-h-1/2"
-						src={images[1]}
+						src={JSON.parse(post?.images.image)[1]}
 						alt=""
 					/>
 					<div className="w-full h-1/2 flex items-center gap-1">
 						<img
 							className="w-1/2 h-full object-cover"
-							src={images[2]}
+							src={JSON.parse(post?.images.image)[2]}
 							alt=""
 						/>
 						<img
 							className="w-1/2 h-full object-cover"
-							src={images[3]}
+							src={JSON.parse(post?.images.image)[3]}
 							alt=""
 						/>
 					</div>
@@ -78,7 +66,7 @@ function ItemRental({
 
 				<div className="absolute bottom-1 left-1 py-1 px-2 bg-overlay text-[10px] text-white flex items-center gap-1 rounded-sm">
 					<FaCamera color="white" />
-					<span>{images.length}</span>
+					<span>{JSON.parse(post?.images.image).length}</span>
 				</div>
 			</div>
 
@@ -86,37 +74,37 @@ function ItemRental({
 			<div className="mt-1">
 				<Link
 					to={`chi-tiet/${toLowerCaseNonAccentVietnamese(
-						title
-					).replace("/", "")}/${id}`}
+						post.title
+					).replace("/", "")}/${post.id}`}
 					className="text-redColor text-sm uppercase font-medium my-3"
 				>
-					{[...Array(star)].length > 0 && (
+					{[...Array(post.star)].length > 0 && (
 						<div className="inline-flex items-center text-yellow me-2 gap-1">
-							{[...Array(star)].map((_, index) => (
+							{[...Array(post.star)].map((_, index) => (
 								<FaStar key={index} />
 							))}
 						</div>
 					)}
 
-					{title}
+					{post.title}
 				</Link>
 				<div className="flex items-center space-x-4">
 					<span className="font-medium text-price text-[12px]">
-						{attributes.price}
+						{post.attributes.price}
 					</span>
 					<span className="text-[12px] text-text ">
-						{attributes.acreage}
+						{post.attributes.acreage}
 					</span>
 					<Link
 						to={"/tinh-thanh/binh-thanh"}
 						className="text-[12px] text-text line-clamp-1"
 					>
-						{address.split(": ")[1]}
+						{post.address.split(": ")[1]}
 					</Link>
 				</div>
 
 				<div className="text-[12px] text-subtitle my-2 line-clamp-2">
-					{description}
+					{post.description}
 				</div>
 
 				<div className="flex items-center justify-between  mt-4">
@@ -129,9 +117,11 @@ function ItemRental({
 							/>
 						</div>
 						<div className="flex flex-col justify-items-start">
-							<h4 className="text-sm text-text">{user?.name}</h4>
+							<h4 className="text-sm text-text">
+								{post.user?.name}
+							</h4>
 							<p className="text-[12px] text-subtitle">
-								{attributes?.published}
+								{post.attributes?.published}
 							</p>
 						</div>
 					</div>
@@ -146,7 +136,7 @@ function ItemRental({
 							sizeButton="sm"
 							rounded="rounded-lg"
 						>
-							{user?.phone}
+							{post.user?.phone}
 						</Button>
 						<Button
 							iconLeft={
@@ -161,7 +151,7 @@ function ItemRental({
 							sizeButton="md"
 							onMouseEnter={handleMouseEnter}
 							onMouseLeave={handleMouseLeave}
-							onClick={() => handleAddItemToWhiteList(id)}
+							onClick={() => handleAddItemToWhiteList(post)}
 						/>
 					</div>
 				</div>
@@ -171,14 +161,7 @@ function ItemRental({
 }
 
 ItemRental.propTypes = {
-	address: PropTypes.string,
-	attributes: PropTypes.string,
-	description: PropTypes.string,
-	images: PropTypes.string,
-	star: PropTypes.number,
-	title: PropTypes.string,
-	user: PropTypes.object,
-	id: PropTypes.string,
+	post: PropTypes.object,
 };
 
 export default ItemRental;

@@ -9,6 +9,7 @@ export const path = {
 	THE_NEWS_SAVED: 'tin-da-luu',
 };
 
+export const WHITELIST_KEY = 'whitelist_posts';
 export const text = [
 	{
 		PAGE_URL: "/",

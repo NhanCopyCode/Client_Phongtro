@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import Logo from '../../assets/logo-phongtro.svg';
+import Logo from "../../assets/logo-phongtro.svg";
 import { CiFolderOn, CiHeart, CiLogin, CiLogout } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { Button } from "../../components";
@@ -11,6 +11,7 @@ import * as actions from "../../store/actions";
 import Search from "./Search";
 import { MdOutlineMenu } from "react-icons/md";
 import { getPostLimit } from "../../store/actions/post";
+import { path } from "../../utils/constants";
 
 function Header({ onOpenVerticalNav }) {
 	const { isLoggedIn } = useSelector((state) => state.auth);
@@ -62,14 +63,10 @@ function Header({ onOpenVerticalNav }) {
 
 				<div className="flex items-center space-x-1">
 					<div className="hidden lg:flex items-center space-x-1">
-						<Button
-							iconLeft={<CiHeart className="w-full h-full" />}
-							textColor="text-black"
-							bgColor="bg-none"
-							widthAndHeightIcon={"w-[18px] h-[18px]"}
-						>
+						<Link to={`/${path.THE_NEWS_SAVED}`} className="flex items-center text-[13px] hover:bg-gray-200 py-2 px-4 transition-all duration-150 ease-linear rounded-xl">
+							<CiHeart className="w-[20px] h-[20px]" />
 							Tin đã lưu
-						</Button>
+						</Link>
 						<Button
 							iconLeft={<CiFolderOn className="w-full h-full" />}
 							textColor="text-black"

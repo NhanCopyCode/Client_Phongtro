@@ -26,6 +26,25 @@ function ItemRental({
 	const handleMouseLeave = () => {
 		setHover(false);
 	};
+
+	const handleAddItemToWhiteList = (id) => {
+		if (localStorage.getItem("whitelist_posts")) {
+			const whitelist_posts = localStorage.getItem("whitelist_posts");
+			if (whitelist_posts.find((item) => item === id)) {
+				localStorage.setItem(
+					"whitelist_posts",
+					whitelist_posts.filter((item) => item !== id)
+				);
+			} else {
+				localStorage.setItem(
+					"whitelist_posts",
+					whitelist_posts.push(id)
+				);
+			}
+		} else {
+			localStorage.setItem("whitelist_posts", [id]);
+		}
+	};
 	return (
 		<div className="bg-white shadow-sm rounded-sm p-3">
 			{/* 4 images */}
@@ -142,6 +161,7 @@ function ItemRental({
 							sizeButton="md"
 							onMouseEnter={handleMouseEnter}
 							onMouseLeave={handleMouseLeave}
+							onClick={() => handleAddItemToWhiteList(id)}
 						/>
 					</div>
 				</div>

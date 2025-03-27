@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import ItemRental from "./ItemRental";
 import { FaCaretDown } from "react-icons/fa";
 import Sidebar from "./Sidebar";
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getPostLimit } from "../store/actions/post";
@@ -25,7 +26,7 @@ const links = [
 
 function ListRental({ categoryCode }) {
 	const [searchParams] = useSearchParams();
-
+ 
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const { posts } = useSelector((state) => state.post);
@@ -38,10 +39,12 @@ function ListRental({ categoryCode }) {
 
 		categoryCode ? (queryObject.categoryCode = categoryCode) : null;
 		dispatch(getPostLimit({ offset, ...queryObject }));
+
+
+
 		window.scroll({ top: 0, left: 0, behavior: "smooth" });
 	}, [dispatch, searchParams, categoryCode]);
 
-	console.log("category code in list rental: ", categoryCode);
 
 	return (
 		<div className="w-5xl max-w-[100%] mx-auto mt-8">
@@ -118,6 +121,10 @@ function ListRental({ categoryCode }) {
 			</div>
 		</div>
 	);
+}
+
+ListRental.propTypes = {
+	categoryCode: PropTypes.string,
 }
 
 export default memo(ListRental);

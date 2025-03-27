@@ -11,6 +11,7 @@ import Homepage from "./containers/Public/Homepage.jsx";
 import LoginForm from "./components/LoginForm.jsx";
 import DetailPost from "./containers/Public/DetailPost.jsx";
 import React from "react";
+import NewSaved from "./containers/Public/NewsSaved.jsx";
 
 const { store, persistor } = reduxStore();
 createRoot(document.getElementById("root")).render(
@@ -38,6 +39,7 @@ createRoot(document.getElementById("root")).render(
 								element={<Homepage />}
 							/>
 							<Route path={path.LOGIN} element={<LoginForm />} />
+							<Route path={path.THE_NEWS_SAVED} element={<NewSaved />} />
 							<Route
 								path={path.DETAIL_POST}
 								element={<DetailPost />}

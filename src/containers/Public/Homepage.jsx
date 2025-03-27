@@ -8,6 +8,8 @@ import formatViToString from "../../utils/formatViToString";
 
 function Homepage() {
 	const location = useLocation();
+	const [header, setHeader] = useState({});
+
 	const { categories } = useSelector((state) => state.app);
 	const [categoryCode, setCategoryCode] = useState({});
 	useEffect(() => {
@@ -15,24 +17,29 @@ function Homepage() {
 			return `/${formatViToString(category.value)}` === location.pathname;
 		});
 
-		console.log("category: ", category);
-		if(category) {
+		if (category) {
 			setCategoryCode(category);
 		}
 	}, [categories, location]);
 
+	useEffect(() => {
+		const headerObj = categories.find(
+			(category) => category.code === categoryCode.code
+		);
+		setHeader(headerObj);
+	}, [categories, categoryCode.code]);
 	return (
 		<>
 			<div className="w-full bg-transparent flex items-center justify-center flex-col mt-4">
 				<div className="max-w-[100%] w-5xl mt-4">
-					{/* <div className="text-xl font-medium">
-						{title?.HOME_TITLE}
+					<div className="text-xl font-medium">
+						{header?.header}
 					</div>
-					<div className="text-[12px]">{title?.HOME_SUB_TITLE}</div> */}
+					<div className="text-[12px]">{header?.subheader}</div>
 					<Provinces />
 				</div>
 			</div>
-			<ListRental categoryCode={categoryCode.code}/>
+			<ListRental categoryCode={categoryCode.code} />
 		</>
 	);
 }

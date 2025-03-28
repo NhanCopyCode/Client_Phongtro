@@ -36,7 +36,6 @@ function ListRental({ categoryCode }) {
 		let offset = Number(searchParams.get("page"))
 			? Number(searchParams.get("page"))
 			: 0;
-
 		categoryCode ? (queryObject.categoryCode = categoryCode) : null;
 		dispatch(getPostLimit({ offset, ...queryObject }));
 

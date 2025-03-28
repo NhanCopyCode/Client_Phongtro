@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { memo } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 function Footer() {
 	const [isShowMore, setShowMore] = useState(true);
 	const { categories } = useSelector((state) => state.app);
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		
-	}, [dispatch])
 
 	const handleShowMore = () => {
 		setShowMore(false);
@@ -171,4 +167,4 @@ function Footer() {
 	);
 }
 
-export default Footer;
+export default memo(Footer);

@@ -5,31 +5,17 @@ import { useState } from "react";
 
 import { LiaTimesSolid } from "react-icons/lia";
 import { customStylesModal } from "../../utils/constants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getPostLimit } from "../../store/actions/post";
+import { useLocation, useNavigate } from "react-router-dom";
 Modal.setAppElement("#root");
 
-// const rentalCategories = [
-// 	{
-// 		name: "Phòng trọ",
-// 		icon: <MdOutlineHomeWork className="w-full h-full" />,
-// 	},
-// 	{
-// 		name: "Nhà riêng",
-// 		icon: <MdOutlineHomeWork className="w-full h-full" />,
-// 	},
-// 	{
-// 		name: "Ở ghép",
-// 		icon: <MdOutlinePeopleOutline className="w-full h-full" />,
-// 	},
-// 	{
-// 		name: "Cho thuê mặt bằng",
-// 		icon: <PiBuildingApartmentFill className="w-full h-full" />,
-// 	},
-// ];
-
 function Search() {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const location = useLocation();
 	const [modalIsOpen, setModalIsOpen] = useState(false);
-	const [activeButton, setActiveButton] = useState("");
+	const [filter, setFilter] = useState({});
 	const { categories, prices, acreages } = useSelector((state) => state.app);
 
 	const handleOpenModalSearch = () => {
@@ -40,10 +26,35 @@ function Search() {
 		setModalIsOpen(false);
 	}
 
-	const handleActiveButton = (code) => {
-		setActiveButton(code);
+	const handleActiveButton = (code, type) => {
+		setFilter((prev) => {
+			return {
+				...prev,
+				[type]: prev[type] === code ? "" : code,
+			};
+		});
 	};
 
+	const handleGetFilterData = () => {
+		const searchParams = new URLSearchParams(location.search);
+
+		// Update search params with selected filters
+		Object.keys(filter).forEach((key) => {
+			if (filter[key]) {
+				searchParams.set(key, filter[key]);
+			} else {
+				searchParams.delete(key);
+			}
+		});
+
+		searchParams.delete("page"); // Reset pagination
+
+
+		navigate({
+			pathname: location.pathname,
+			search: searchParams.toString(),
+		});
+	};
 
 	return (
 		<div className="">
@@ -82,13 +93,14 @@ function Search() {
 							{categories.length > 0 &&
 								categories.map((item) => (
 									<div
-										key={item.name}
+										key={item.code}
 										className="relative overflow-hidden mb-2"
 									>
 										<Button
 											iconLeft={item.icon}
 											border={
-												activeButton === item.code
+												filter["categoryCode"] ===
+												item.code
 													? "border border-redColor text-redColor"
 													: "border border-[#ddd]"
 											}
@@ -97,7 +109,10 @@ function Search() {
 											rounded="rounded-2xl"
 											subClass={""}
 											onClick={() =>
-												handleActiveButton(item.code)
+												handleActiveButton(
+													item.code,
+													"categoryCode"
+												)
 											}
 										>
 											{item.value}
@@ -111,13 +126,14 @@ function Search() {
 							{prices.length > 0 &&
 								prices.map((item) => (
 									<div
-										key={item.name}
+										key={item.code}
 										className="relative overflow-hidden mb-2"
 									>
 										<Button
 											iconLeft={item.icon}
 											border={
-												activeButton === item.code
+												filter["priceCode"] ===
+												item.code
 													? "border border-redColor text-redColor"
 													: "border border-[#ddd]"
 											}
@@ -126,7 +142,10 @@ function Search() {
 											rounded="rounded-2xl"
 											subClass={""}
 											onClick={() =>
-												handleActiveButton(item.code)
+												handleActiveButton(
+													item.code,
+													"priceCode"
+												)
 											}
 										>
 											{item.value}
@@ -139,13 +158,13 @@ function Search() {
 							{acreages.length > 0 &&
 								acreages.map((item) => (
 									<div
-										key={item.name}
+										key={item.code}
 										className="relative overflow-hidden mb-2"
 									>
 										<Button
 											iconLeft={item.icon}
 											border={
-												activeButton === item.code
+												filter["areaCode"] === item.code
 													? "border border-redColor text-redColor"
 													: "border border-[#ddd]"
 											}
@@ -154,7 +173,10 @@ function Search() {
 											rounded="rounded-2xl"
 											subClass={""}
 											onClick={() =>
-												handleActiveButton(item.code)
+												handleActiveButton(
+													item.code,
+													"areaCode"
+												)
 											}
 										>
 											{item.value}
@@ -169,6 +191,7 @@ function Search() {
 							bgColor="bg-redColor w-[100%]"
 							fontSize="text-[18px]"
 							hoverEffect="none"
+							onClick={handleGetFilterData}
 						>
 							Áp dụng
 						</Button>

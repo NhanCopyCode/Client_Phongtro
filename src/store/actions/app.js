@@ -4,6 +4,7 @@ import {
 	apiGetCategories,
 	apiGetPrices,
 } from "../../services/categoryService";
+import { getAllProvinceService } from "../../services/provinceService";
 
 const getAllCategories = () => async (dispatch) => {
 	try {
@@ -74,4 +75,29 @@ const getAllAcreages = () => async (dispatch) => {
 	}
 };
 
-export { getAllCategories, getAllPrices, getAllAcreages };
+const getAllProvinces = () => async (dispatch) => {
+	try {
+		const response = await getAllProvinceService();
+		console.log('response:', response)
+		
+		if (response) {
+			dispatch({
+				type: actionTypes.GET_PROVINCES,
+				payload: {
+					provinces: response.data,
+					message: "Get all list provinces successfully!",
+				},
+			});
+		}
+	} catch (error) {
+		dispatch({
+			type: actionTypes.GET_PROVINCES,
+			payload: {
+				provinces: null,
+				message: "Can not find any provinces!",
+			},
+		});
+	}
+};
+
+export { getAllCategories, getAllPrices, getAllAcreages, getAllProvinces };

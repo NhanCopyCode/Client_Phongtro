@@ -9,7 +9,7 @@ function NewSaved() {
 		window.scroll({ top: 0, left: 0, behavior: "smooth" });
 	}, []);
 	return (
-		<div className="w-5xl mx-auto max-w-[100%] my-4">
+		<div className="w-5xl mx-auto max-w-[100%] my-4 mt-[100px] py-4">
 			<h2 className="text-[20px] font-medium">Tin đã lưu</h2>
 			<div className="grid grid-cols-12 gap-4">
 				<div className="col-span-8 flex flex-col gap-4 mt-4">

@@ -30,7 +30,7 @@ function Homepage() {
 	}, [categories, categoryCode.code]);
 	return (
 		<>
-			<div className="w-full bg-transparent flex items-center justify-center flex-col mt-4">
+			<div className="w-full bg-transparent flex items-center justify-center flex-col mt-[100px]">
 				<div className="max-w-[100%] w-5xl mt-4">
 					<div className="text-xl font-medium">
 						{header?.header}

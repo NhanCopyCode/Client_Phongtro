@@ -1,7 +1,6 @@
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
 import { Navigation } from "../../components";
-import SearchBottom from "./SearchBottom";
 import VerticalNavigation from "../../components/VerticalNavigation";
 import { useState } from "react";
 import Overlay from "../../components/Overlay";
@@ -30,7 +29,7 @@ function Home() {
 				</>
 			)}
 
-			<SearchBottom />
+			{/* <SearchBottom /> */}
 			<Outlet />
 			<Footer />
 		</div>

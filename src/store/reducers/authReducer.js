@@ -3,7 +3,7 @@ import actionTypes from "../actions/actionTypes";
 const initState = {
 	isLoggedIn: false,
 	token: null,
-	msg: "",
+	msg: null,
 	update: false,
 };
 
@@ -14,6 +14,7 @@ const authReducer = (state = initState, action) => {
 				...state,
 				isLoggedIn: true,
 				token: action.data,
+				msg: null,
 			};
 
 			return newState;
@@ -30,6 +31,7 @@ const authReducer = (state = initState, action) => {
 				...state,
 				isLoggedIn: true,
 				token: action.data,
+				msg: null,
 			};
 		case actionTypes.LOGIN_FAIL:
 			return {

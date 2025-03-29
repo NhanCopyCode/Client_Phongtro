@@ -6,17 +6,24 @@ import { useState } from "react";
 import { LiaTimesSolid } from "react-icons/lia";
 import { customStylesModal } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostLimit } from "../../store/actions/post";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { getAllProvinces } from "../../store/actions/app";
 Modal.setAppElement("#root");
 
 function Search() {
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const location = useLocation();
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [filter, setFilter] = useState({});
-	const { categories, prices, acreages } = useSelector((state) => state.app);
+	const { categories, prices, acreages, provinces } = useSelector(
+		(state) => state.app
+	);
+	
+	useEffect(() => {
+		dispatch(getAllProvinces());
+	}, [dispatch]);
 
 	const handleOpenModalSearch = () => {
 		setModalIsOpen(true);
@@ -26,6 +33,7 @@ function Search() {
 		setModalIsOpen(false);
 	}
 
+
 	const handleActiveButton = (code, type) => {
 		setFilter((prev) => {
 			return {
@@ -34,6 +42,8 @@ function Search() {
 			};
 		});
 	};
+
+	console.log("provinces: ", provinces);
 
 	const handleGetFilterData = () => {
 		const searchParams = new URLSearchParams(location.search);
@@ -48,7 +58,6 @@ function Search() {
 		});
 
 		searchParams.delete("page"); // Reset pagination
-
 
 		navigate({
 			pathname: location.pathname,
@@ -75,7 +84,7 @@ function Search() {
 				contentLabel="Example Modal"
 			>
 				<div className="relative h-[100%]">
-					<div className="flex items-center justify-between py-3 px-5 shadow-md">
+					<div className="flex items-center justify-between py-3 px-5 shadow-md bg-white relative z-2">
 						<h2 className="text-xl text-">Bộ lọc</h2>
 						<Button
 							bgColor="bg-none"
@@ -86,7 +95,7 @@ function Search() {
 							<LiaTimesSolid />
 						</Button>
 					</div>
-					<div className="py-5 px-5">
+					<div className="py-5 px-5 overflow-y-auto max-h-[500px]">
 						<h3 className="text-lg mb-3">Danh mục cho thuê</h3>
 
 						<div className="flex items-center space-x-2 flex-wrap">
@@ -184,9 +193,40 @@ function Search() {
 									</div>
 								))}
 						</div>
+						<h3 className="text-lg mb- my-4">Tỉnh</h3>
+						<div className="flex items-center space-x-2 flex-wrap">
+							{provinces.length > 0 &&
+								provinces.map((item) => (
+									<div
+										key={item.code}
+										className="relative overflow-hidden mb-2"
+									>
+										<Button
+											iconLeft={item.icon}
+											border={
+												filter["provinceCode"] === item.code
+													? "border border-redColor text-redColor"
+													: "border border-[#ddd]"
+											}
+											bgColor="bg-white"
+											textColor="text-black"
+											rounded="rounded-2xl"
+											subClass={""}
+											onClick={() =>
+												handleActiveButton(
+													item.code,
+													"provinceCode"
+												)
+											}
+										>
+											{item.value}
+										</Button>
+									</div>
+								))}
+						</div>
 					</div>
 
-					<div className="absolute bottom-0 right-0 left-0 shadow-lg px-5 py-3 border-t-2 border-t-[#ccc]">
+					<div className="absolute bottom-0 right-0 left-0 shadow-lg px-5 py-3 border-t-1 border-t-[#ccc] bg-white">
 						<Button
 							bgColor="bg-redColor w-[100%]"
 							fontSize="text-[18px]"

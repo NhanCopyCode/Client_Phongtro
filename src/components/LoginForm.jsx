@@ -33,6 +33,7 @@ function LoginForm() {
 
 	useEffect(() => {
 		if (msg) {
+			console.log("message error: ", msg);
 			Swal.fire({
 				text: msg,
 				icon: "error",
@@ -116,7 +117,7 @@ function LoginForm() {
 	};
 
 	return (
-		<div className=" flex items-center justify-center w-5xl h-full my-0 mx-auto px-2">
+		<div className=" flex items-center justify-center w-5xl h-full my-0 mx-auto px-2 mt-[100px]">
 			<div className="w-[552px] h-auto p-6 flex flex-col space-y-4 rounded-md !shadow-md my-7 bg-white">
 				<h3 className="font-semibold text-2xl text-center">
 					{isRegister ? "Đăng kí" : "Đăng nhập"}

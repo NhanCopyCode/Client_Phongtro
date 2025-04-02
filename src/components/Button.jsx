@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import { memo } from "react";
+import { Link } from "react-router-dom";
 
 function Button({
+	path,
 	children,
 	disabled,
 	number,
@@ -55,8 +57,11 @@ function Button({
 		${height} ${width} ${subClass}
     `;
 
+	const Element = path ? Link : 'button';
+
 	return (
-		<button
+		<Element
+			to={path}
 			className={className}
 			onClick={onClick}
 			onMouseEnter={onMouseEnter}
@@ -81,11 +86,12 @@ function Button({
 					{iconRight}
 				</span>
 			)}
-		</button>
+		</Element>
 	);
 }
 
 Button.propTypes = {
+	path: PropTypes.string,
 	children: PropTypes.string,
 	disabled: PropTypes.bool,
 	number: PropTypes.number,

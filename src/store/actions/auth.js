@@ -8,7 +8,10 @@ export const register = (payload) => async (dispatch) => {
 		if (response?.data.errorCode === 0) {
 			dispatch({
 				type: actionTypes.REGISTER_SUCCESS,
-				data: response.data?.token,
+				data: {
+					token: response.data?.token,
+					user: response.data?.user,
+				},
 			});
 		} else {
 			dispatch({
@@ -31,7 +34,10 @@ export const login = (payload) => async (dispatch) => {
 		if (response?.data.errorCode === 0) {
 			dispatch({
 				type: actionTypes.LOGIN_SUCCESS,
-				data: response.data?.token,
+				data: {
+					token: response.data?.token,
+					user: response.data?.user,
+				},
 			});
 		} else {
 			dispatch({

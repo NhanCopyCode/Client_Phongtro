@@ -78,7 +78,6 @@ const getAllAcreages = () => async (dispatch) => {
 const getAllProvinces = () => async (dispatch) => {
 	try {
 		const response = await getAllProvinceService();
-		console.log('response:', response)
 		
 		if (response) {
 			dispatch({

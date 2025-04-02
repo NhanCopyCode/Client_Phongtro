@@ -7,6 +7,12 @@ export const path = {
 	NHA_CHO_THUE: "nha-cho-thue",
 	DETAIL_POST: "chi-tiet/:title/:postId",
 	THE_NEWS_SAVED: 'tin-da-luu',
+
+	QUAN_LY: '/quan-ly',
+	DANG_TIN_MOI: 'dang-tin-moi',
+	DANH_SACH_TIN_MOI: 'danh-sach-tin-moi',
+	NAP_TIEN_VAO_TAI_KHOAN: 'nap-tien-vao-tai-khoan',
+	LICH_SU_NAP_TIEN: 'lich-su-nap-tien'
 };
 
 export const WHITELIST_KEY = 'whitelist_posts';

@@ -17,7 +17,7 @@ function Navigation() {
 	}, [categories]);
 
 	return (
-		<div className="w-full shadow-md z-10 bg-white fixed top-[61px] right-0 left-0">
+		<div className="w-full shadow-md bg-white fixed top-[61px] right-0 left-0 z-[1]">
 			<div className="w-5xl flex items-center my-0 mx-auto px-2 max-w-[100%]">
 				<ul className="flex h-full items-center space-x-4 text-[13px] cursor-pointer flex-wrap">
 					{listCategory.map((item) => (

@@ -43,7 +43,6 @@ function Search() {
 		});
 	};
 
-	console.log("provinces: ", provinces);
 
 	const handleGetFilterData = () => {
 		const searchParams = new URLSearchParams(location.search);

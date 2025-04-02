@@ -15,6 +15,7 @@ import NewSaved from "./containers/Public/NewsSaved.jsx";
 import AdminPage from "./containers/System/AdminPage.jsx";
 import CreatePost from "./components/Admin/CreatePost.jsx";
 
+
 const { store, persistor } = reduxStore();
 createRoot(document.getElementById("root")).render(
 	<React.StrictMode>

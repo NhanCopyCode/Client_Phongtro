@@ -4,10 +4,18 @@ import defaultUserImage from "../../assets/default-user.svg";
 import { path } from "../../utils/constants";
 import { IoCreateOutline, IoListCircleOutline } from "react-icons/io5";
 import { FaRegListAlt, FaRegMoneyBillAlt } from "react-icons/fa";
+import { IoIosLogOut } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "../../store/actions";
 
 function Sidebar() {
+	const dispatch = useDispatch();
+	const { user } = useSelector(state => state.auth);
+	const handleLogout = () => {
+		dispatch(actions.logout());
+	};
 	return (
-		<div className="absolute top-0 left-0 bg-white shadow-sm h-full z-10 w-[210px]">
+		<div className="fixed top-[45px] left-0 bg-white shadow-sm h-[100vh] z-10 w-[210px]">
 			<div className="p-5 flex items-center gap-3 h-[90px]">
 				<div className="p-1 border-1 border-[#ccc] rounded-[50%] w-[50px] h-[50px]">
 					<img
@@ -17,9 +25,11 @@ function Sidebar() {
 					/>
 				</div>
 				<div className="flex flex-col items-start text-[13px]">
-					<h3 className="font-medium">Thanh Nhangg</h3>
-					<p>0919094701</p>
-					<p className="text-[10px] line-clamp-1 ">Mã tài khoản: 1290123</p>
+					<h3 className="font-medium">{user?.name}</h3>
+					<p>{user?.phone}</p>
+					<p className="text-[10px] line-clamp-1 max-w-[113px]">
+						Mã tài khoản: {user?.id}
+					</p>
 				</div>
 			</div>
 			<div className="flex items-start flex-col p-4 gap-1">
@@ -67,6 +77,13 @@ function Sidebar() {
 					<IoListCircleOutline className="w-[18px] h-[18px]" />
 					<span>Lịch sử nạp tiền</span>
 				</NavLink>
+				<button
+					className="text-[13px] flex items-center gap-2 w-[100%] p-2 hover:bg-subBg rounded-md cursor-pointer"
+					onClick={handleLogout}
+				>
+					<IoIosLogOut className="w-[18px] h-[18px]" />
+					<span>Đăng xuất</span>
+				</button>
 			</div>
 		</div>
 	);

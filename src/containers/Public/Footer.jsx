@@ -112,7 +112,7 @@ function Footer() {
 					Chúng tôi biết bạn có rất nhiều lựa chọn, nhưng
 					Phongtro123.com tự hào là trang web đứng top google về các
 					từ khóa:{" "}
-					{categories.map((category, index) => (
+					{categories && categories.length > 0 && categories.map((category, index) => (
 						<React.Fragment key={index}>
 							<Link  to={"/" + category.code} className="text-primary cursor-pointer hover:text-redColor">
 								{category.value.toLowerCase()}

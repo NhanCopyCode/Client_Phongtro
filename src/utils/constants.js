@@ -6,16 +6,16 @@ export const path = {
 	CHO_THUE_PHONG_TRO: "cho-thue-phong-tro",
 	NHA_CHO_THUE: "nha-cho-thue",
 	DETAIL_POST: "chi-tiet/:title/:postId",
-	THE_NEWS_SAVED: 'tin-da-luu',
+	THE_NEWS_SAVED: "tin-da-luu",
 
-	QUAN_LY: '/quan-ly',
-	DANG_TIN_MOI: 'dang-tin-moi',
-	DANH_SACH_TIN_MOI: 'danh-sach-tin-moi',
-	NAP_TIEN_VAO_TAI_KHOAN: 'nap-tien-vao-tai-khoan',
-	LICH_SU_NAP_TIEN: 'lich-su-nap-tien'
+	QUAN_LY: "/quan-ly",
+	DANG_TIN_MOI: "dang-tin-moi",
+	DANH_SACH_TIN_MOI: "danh-sach-tin-moi",
+	NAP_TIEN_VAO_TAI_KHOAN: "nap-tien-vao-tai-khoan",
+	LICH_SU_NAP_TIEN: "lich-su-nap-tien",
 };
 
-export const WHITELIST_KEY = 'whitelist_posts';
+export const WHITELIST_KEY = "whitelist_posts";
 export const text = [
 	{
 		PAGE_URL: "/",
@@ -132,7 +132,6 @@ export const filterAcreage = {
 
 export const viewByRegionTitle = "Xem theo khu vực";
 
-
 export const customStylesModal = {
 	content: {
 		background: "white",
@@ -162,3 +161,44 @@ export const customStylesModal = {
 		justifyContent: "center",
 	},
 };
+
+export const navItemsCreatePost = [
+	{
+		id: "chuyen-muc",
+		label: "Loại chuyên mục",
+	},
+	{
+		id: "khu-vuc",
+		label: "Loại khu vực",
+	},
+	{
+		id: "thong-tin-mo-ta",
+		label: "Thông tin mô tả",
+	},
+	{
+		id: "hinh-anh",
+		label: "Hình ảnh",
+	},
+	{
+		id: "thong-tin-lien-he",
+		label: "Thông tin liên hệ",
+	},
+];
+
+export const requiredFieldsCreatePostForm = [
+	"categoryCode",
+	"provinceCode",
+	"title",
+	"description",
+	"address",
+	"priceCode",
+	"areaCode",
+	"images",
+];
+
+export const navItemListPost = [
+	{
+		id: "tat-ca",
+		label: "Tất cả",
+	},
+];

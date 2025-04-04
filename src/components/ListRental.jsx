@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import ItemRental from "./ItemRental";
 import { FaCaretDown } from "react-icons/fa";
@@ -8,6 +8,7 @@ import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostLimit } from "../store/actions/post";
 import Pagination from "./Pagination";
+import { scrollToTop } from "../utils/scrollEffect";
 
 const links = [
 	{
@@ -26,7 +27,7 @@ const links = [
 
 function ListRental({ categoryCode }) {
 	const [searchParams] = useSearchParams();
- 
+
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const { posts } = useSelector((state) => state.post);
@@ -39,11 +40,8 @@ function ListRental({ categoryCode }) {
 		categoryCode ? (queryObject.categoryCode = categoryCode) : null;
 		dispatch(getPostLimit({ offset, ...queryObject }));
 
-
-
-		window.scroll({ top: 0, left: 0, behavior: "smooth" });
+		scrollToTop();
 	}, [dispatch, searchParams, categoryCode]);
-
 
 	return (
 		<div className="w-5xl max-w-[100%] mx-auto mt-8">
@@ -94,10 +92,7 @@ function ListRental({ categoryCode }) {
 						{posts &&
 							posts.length > 0 &&
 							posts.map((item) => (
-								<ItemRental
-									key={item?.id}
-									post={item}
-								/>
+								<ItemRental key={item?.id} post={item} />
 							))}
 					</div>
 
@@ -117,6 +112,6 @@ function ListRental({ categoryCode }) {
 
 ListRental.propTypes = {
 	categoryCode: PropTypes.string,
-}
+};
 
 export default memo(ListRental);

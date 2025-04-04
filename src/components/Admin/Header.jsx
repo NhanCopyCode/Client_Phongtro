@@ -47,7 +47,7 @@ function Header() {
 	}, [isLoggedIn]);
 	return (
 		<>
-			<div className="w-full py-0 px-5 bg-blue h-[45px] flex items-center justify-between">
+			<div className="w-full py-0 px-5 bg-blue h-[45px] flex items-center justify-between fixed top-0 z-10">
 				<div className="flex items-center h-[100%] gap-4">
 					<Link to={"/"}>
 						<img

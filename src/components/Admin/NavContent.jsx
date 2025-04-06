@@ -20,7 +20,7 @@ function NavContent({ title, navItems }) {
 	};
 
 	return (
-		<div className="mt-3 px-10 h-[90px] shadow-md w-[100%] fixed top-[33px] pt-2 bg-white z-10">
+		<div className="mt-3 px-10 h-[90px] shadow-md w-[100%] sticky top-[45px] pt-2 bg-white z-[5]">
 			<h1 className="text-[22px] font-medium">{title}</h1>
 			<ul className="flex items-center gap-4 text-[14px] text-secondaryText">
 				{navItems &&

@@ -3,6 +3,7 @@ const scrollToTop = () => {
 };
 
 const scrollToElement = (ref) => {
+    console.log('ref', ref);
     if(ref?.current) {
         ref.current.scrollIntoView({ behavior: "smooth", top: 145})
     }

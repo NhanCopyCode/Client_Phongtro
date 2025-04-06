@@ -2,7 +2,7 @@ import Button from "../Button";
 
 function ListItem() {
 	return (
-		<div className="p-[14px] shadow-sm rounded-md flex items-center justify-between bg-white">
+		<div className="p-[14px] shadow-sm rounded-md flex items-stretch justify-between bg-white h-[200px]">
 			<div className="flex items-center gap-2 w-[664px]">
 				<div className="w-[180px] h-[170px] shrink-0">
 					<img
@@ -54,7 +54,8 @@ function ListItem() {
 				</div>
 			</div>
 
-			<div className="p-5 flex-1 bg-gray h-full rounded-sm ml-3">
+			{/* Can not set height 100% in this div below */}
+			<div className="p-5 bg-gray rounded-sm ml-3 h-[100%]">
 				<h3 className="uppercase text-center text-[16px] text-success">
 					Tin đang đăng
 				</h3>

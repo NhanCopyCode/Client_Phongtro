@@ -9,15 +9,15 @@ function AdminPage() {
 		window.scroll({ top: 0, left: 0, behavior: "smooth" });
 	}, []);
 	return (
-		<>
+		<div className="relative">
 			<Header />
-			<div className="flex relative">
+			<div className="flex">
 				<Sidebar />
 				<div className="ml-[210px] w-[100%]">
 					<Outlet />
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

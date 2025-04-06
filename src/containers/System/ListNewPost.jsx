@@ -10,7 +10,7 @@ function ListNewPost() {
 				title={"Danh sách tin đăng"}
 				navItems={navItemListPost}
 			/>
-			<div className="px-10 py-5 bg-gray mt-[136px]">
+			<div className="px-10 py-12 bg-gray">
 				<div className="mb-5 w-[250px] relative">
 					<input
 						type="email"

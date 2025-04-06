@@ -11,40 +11,64 @@ import { navItemsCreatePost } from "../../utils/constants";
 import { requiredFieldsCreatePostForm } from "../../utils/constants";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import scrollToTop from "../../utils/scrollEffect";
+import { scrollToElement } from "../../utils/scrollEffect";
+import { useRef } from "react";
+import readMoneyVND from "../../utils/readMoneyVND";
 
 function CreatePost() {
 	const dispatch = useDispatch();
+	const [price, setPrice] = useState("");
 	const [errors, setErrors] = useState({});
 	const [data, setData] = useState({});
 	const [images, setImages] = useState([]);
 	const maxNumber = 69;
 	const { categories, provinces, prices } = useSelector((state) => state.app);
 	const { user } = useSelector((state) => state.auth);
+	const refs = {
+		categoryCode: useRef(),
+		provinceCode: useRef(),
+		areaCode: useRef(),
+		description: useRef(),
+		title: useRef(),
+		address: useRef(),
+		priceCode: useRef(),
+		images: useRef(),
+	};
+
 
 	const onChange = (imageList) => {
 		setImages(imageList);
-		const imageData = imageList.map((image) => image.data_url); // Use 'image.file' if needed
+		const imageData = imageList.map((image) => image.data_url);
 
 		setData((prevData) => ({
 			...prevData,
-			images: imageData, // Store images in 'data'
+			images: imageData,
 		}));
 	};
 
 	const validation = () => {
 		let newErrors = {};
+		let firstErrorKey = null;
 		requiredFieldsCreatePostForm.forEach((field) => {
 			if (!data[field] || data[field].trim === "") {
 				newErrors[field] = "Trường này là bắt buộc";
+				if (!firstErrorKey) {
+					firstErrorKey = field;
+				}
 			}
 		});
 
 		if (data["images"]?.length < 6) {
 			newErrors["images"] = "Yêu cầu tải ít nhất 6 ảnh";
+			if (!firstErrorKey) {
+				firstErrorKey = "images";
+			}
 		}
 
 		setErrors(newErrors);
+		if (firstErrorKey && refs[firstErrorKey]) {
+			scrollToElement(refs[firstErrorKey]);
+		}
 		console.log("new errors: ", newErrors);
 		return Object.keys(newErrors).length === 0;
 	};
@@ -56,8 +80,6 @@ function CreatePost() {
 				icon: "success",
 				title: <span>Đăng tin thuê thành công</span>,
 			});
-		} else {
-			scrollToTop();
 		}
 	};
 
@@ -76,13 +98,19 @@ function CreatePost() {
 		});
 	};
 
+	const handleDisplayMoney = (num) => {
+		setPrice(readMoneyVND(num))
+		if(num.trim() ==="") {
+			setPrice("");
+		}
+	}
 	return (
 		<>
 			<NavContent
 				title={"Đăng tin cho thuê"}
 				navItems={navItemsCreatePost}
 			/>
-			<div className="flex flex-col items-center justify-center gap-4 py-5 bg-gray mt-28">
+			<div className="flex flex-col items-center justify-center gap-4 py-8 bg-gray ">
 				<div
 					id="chuyen-muc"
 					className="w-[650px] bg-white rounded-sm shadow-sm mt-4 p-5"
@@ -228,11 +256,13 @@ function CreatePost() {
 					<p className="text-[14px] mt-4">Giá cho thuê</p>
 					<input
 						className="rounded-md border-subtitle border w-[50%] py-1 px-3 outline-none"
-						onChange={(e) =>
+						onBlur={(e) =>
 							handleSetData("priceCode", e.target.value)
 						}
+						onChange={e => handleDisplayMoney(e.target.value)}
 					/>
-					<div className="text-[11px]">
+					<div className="text-[11px] mt-2">
+						<p className="text-success font-medium">{price}</p>
 						<p className="text-secondaryText">
 							Nhập đầy đủ số, ví dụ 1 triệu thì nhập là 1000000
 						</p>

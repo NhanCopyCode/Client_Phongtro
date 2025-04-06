@@ -108,7 +108,7 @@ function Header() {
 						{/* Tooltip code below */}
 						{visible && (
 							<div
-								className="absolute top-full right-0 bg-white rounded-sm shadow-md border-1 border-[#ccc] p-5 z-30 text-text
+								className="absolute top-full right-0 bg-white rounded-sm shadow-md border-1 border-[#ccc] p-5 z-40 text-text
                                                         w-[350px]"
 							>
 								<div className="flex items-center">

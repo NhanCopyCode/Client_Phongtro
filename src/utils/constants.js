@@ -202,3 +202,16 @@ export const navItemListPost = [
 		label: "Tất cả",
 	},
 ];
+
+export const ones = [
+	"không",
+	"một",
+	"hai",
+	"ba",
+	"bốn",
+	"năm",
+	"sáu",
+	"bảy",
+	"tám",
+	"chín",
+];

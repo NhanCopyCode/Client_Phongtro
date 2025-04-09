@@ -30,11 +30,12 @@ function ItemRental({ post, isInWhitelist }) {
 	};
 
 	useEffect(() => {
-		const whitelist_posts = JSON.parse(localStorage.getItem(WHITELIST_KEY)) || [];
-		if(whitelist_posts.find(item => item.id === post.id)) {
+		const whitelist_posts =
+			JSON.parse(localStorage.getItem(WHITELIST_KEY)) || [];
+		if (whitelist_posts.find((item) => item.id === post.id)) {
 			setActiveHeart(true);
 		}
-	}, [])
+	}, []);
 
 	return (
 		<div className="bg-white shadow-sm rounded-sm p-3">
@@ -81,9 +82,9 @@ function ItemRental({ post, isInWhitelist }) {
 					).replace("/", "")}/${post.id}`}
 					className="text-redColor text-sm uppercase font-medium my-3"
 				>
-					{[...Array(post.star)].length > 0 && (
+					{post.star && [...Array(+post.star)].length > 0 && (
 						<div className="inline-flex items-center text-yellow me-2 gap-1">
-							{[...Array(post.star)].map((_, index) => (
+							{[...Array(+post.star)].map((_, index) => (
 								<FaStar key={index} />
 							))}
 						</div>
@@ -168,6 +169,7 @@ function ItemRental({ post, isInWhitelist }) {
 
 ItemRental.propTypes = {
 	post: PropTypes.object,
+	isInWhitelist: PropTypes.bool,
 };
 
 export default ItemRental;

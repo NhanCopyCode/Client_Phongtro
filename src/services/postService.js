@@ -52,10 +52,26 @@ const getNewPostService = async () => {
 		console.log("Error at post service file: ", error);
 	}
 };
+
+const createPostService = async (data) => {
+	try {
+		// console.log("data create post service: ", data);
+		const response = await axios.post("/api/v1/posts/create", data, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},	
+		});
+
+		return response;
+	} catch (error) {
+		console.log("Error at post service file: ", error);
+	}
+};
 export {
 	getAllPosts,
 	apiGetPostLimit,
 	filterPostService,
 	getPostByIdService,
 	getNewPostService,
+	createPostService,
 };

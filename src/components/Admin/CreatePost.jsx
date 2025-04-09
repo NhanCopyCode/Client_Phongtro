@@ -14,16 +14,23 @@ import withReactContent from "sweetalert2-react-content";
 import { scrollToElement } from "../../utils/scrollEffect";
 import { useRef } from "react";
 import readMoneyVND from "../../utils/readMoneyVND";
+import isNumeric from "../../utils/isNumeric";
+import { createPostService } from "../../services/postService";
 
 function CreatePost() {
 	const dispatch = useDispatch();
+	const { user } = useSelector((state) => state.auth);
+	console.log("user:", user);
 	const [price, setPrice] = useState("");
 	const [errors, setErrors] = useState({});
-	const [data, setData] = useState({});
+	const [data, setData] = useState({
+		name: user?.name,
+		phone: user?.phone,
+	});
 	const [images, setImages] = useState([]);
 	const maxNumber = 69;
 	const { categories, provinces, prices } = useSelector((state) => state.app);
-	const { user } = useSelector((state) => state.auth);
+
 	const refs = {
 		categoryCode: useRef(),
 		provinceCode: useRef(),
@@ -35,10 +42,9 @@ function CreatePost() {
 		images: useRef(),
 	};
 
-
 	const onChange = (imageList) => {
 		setImages(imageList);
-		const imageData = imageList.map((image) => image.data_url);
+		const imageData = imageList.map((image) => image.file);
 
 		setData((prevData) => ({
 			...prevData,
@@ -73,12 +79,39 @@ function CreatePost() {
 		return Object.keys(newErrors).length === 0;
 	};
 
-	const handleSubmitData = () => {
-		console.log("data :", data);
-		if (validation()) {
+	const handleSubmitData = async () => {
+		console.log("userid append: ", user?.id);
+
+		if (!validation()) return;
+
+		const formData = new FormData();
+
+		// Append all fields to formData
+		for (let key in data) {
+			if (key === "images") {
+				data.images.forEach((image) => {
+					formData.append("images", image); // 'images' must match your backend field name
+				});
+			} else {
+				formData.append(key, data[key]);
+			}
+		}
+		formData.append("userId", user?.id);
+
+		try {
+			const result = await createPostService(formData);
+
 			withReactContent(Swal).fire({
 				icon: "success",
-				title: <span>Đăng tin thuê thành công</span>,
+				title: <span>Đăng tin thành công</span>,
+			});
+
+			// Optionally reset form here
+		} catch (err) {
+			console.log("Submit error: ", err);
+			withReactContent(Swal).fire({
+				icon: "error",
+				title: <span>Đã xảy ra lỗi khi đăng tin</span>,
 			});
 		}
 	};
@@ -89,7 +122,6 @@ function CreatePost() {
 	}, [dispatch]);
 
 	const handleSetData = (key, code) => {
-		console.log("code ", code);
 		setData((prev) => {
 			return {
 				...prev,
@@ -99,11 +131,11 @@ function CreatePost() {
 	};
 
 	const handleDisplayMoney = (num) => {
-		setPrice(readMoneyVND(num))
-		if(num.trim() ==="") {
+		setPrice(readMoneyVND(num));
+		if (num.trim() === "") {
 			setPrice("");
 		}
-	}
+	};
 	return (
 		<>
 			<NavContent
@@ -254,13 +286,19 @@ function CreatePost() {
 						</span>
 					)}
 					<p className="text-[14px] mt-4">Giá cho thuê</p>
-					<input
-						className="rounded-md border-subtitle border w-[50%] py-1 px-3 outline-none"
-						onBlur={(e) =>
-							handleSetData("priceCode", e.target.value)
-						}
-						onChange={e => handleDisplayMoney(e.target.value)}
-					/>
+					<div className="w-[50%] flex items-center">
+						<input
+							type="number"
+							className="rounded-s-md border-subtitle border w-[80%] py-1 px-3 outline-none border-r-0"
+							onBlur={(e) =>
+								handleSetData("priceCode", e.target.value)
+							}
+							onChange={(e) => handleDisplayMoney(e.target.value)}
+						/>
+						<span className="py-1 px-3 border border-subtitle rounded-e-md ">
+							đồng/tháng
+						</span>
+					</div>
 					<div className="text-[11px] mt-2">
 						<p className="text-success font-medium">{price}</p>
 						<p className="text-secondaryText">
@@ -270,12 +308,19 @@ function CreatePost() {
 					</div>
 
 					<p className="text-[14px] mt-4">Diện tích (*)</p>
-					<input
-						className="rounded-md border-subtitle border w-[50%] py-1 px-3 outline-none"
-						onChange={(e) =>
-							handleSetData("areaCode", e.target.value)
-						}
-					/>
+
+					<div className="w-[50%] flex items-center">
+						<input
+							className="rounded-s-md border-subtitle border w-[90%] py-1 px-3 outline-none border-r-0"
+							onChange={(e) =>
+								handleSetData("areaCode", e.target.value)
+							}
+							type="number"
+						/>
+						<span className="py-1 px-3 border border-subtitle rounded-e-md ">
+							m2
+						</span>
+					</div>
 					<div className="text-[11px]">
 						<p className="text-redColor">Bạn chưa nhập diện tích</p>
 					</div>

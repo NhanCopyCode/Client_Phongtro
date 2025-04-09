@@ -29,7 +29,7 @@ function DetailPost() {
 		fetchPostById();
 	}, [postId]);
 	return (
-		<div className="w-5xl max-w-[100%] m-auto mt-4">
+		<div className="w-5xl max-w-[100%] m-auto mt-[100px]">
 			<BreadCrumb />
 
 			<div className="grid grid-cols-12 gap-2">

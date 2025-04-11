@@ -13,6 +13,7 @@ import houseImage from "../../assets/house_image.jpg";
 import { useEffect, useState } from "react";
 import * as postService from "../../services/postService";
 import formatDate from "../../utils/formatDate";
+import Slideshow from "../../components/SlideShow";
 
 function DetailPost() {
 	const { postId } = useParams();
@@ -36,7 +37,7 @@ function DetailPost() {
 				<div className="xl:col-span-8 col-span-12">
 					{post.images?.image && post.images?.image.length > 0 && (
 						<div className="rounded-md shadow-sm bg-white overflow-hidden ">
-							Xin chào
+							<Slideshow images={JSON.parse(post.images?.image)}/>
 						</div>
 					)}
 					<div className="mt-3 bg-white rounded-md shadow-sm p-5">
@@ -54,7 +55,7 @@ function DetailPost() {
 							{post.title}
 						</div>
 						<div className="flex items-center gap-2  mt-1">
-							<MdOutlineLocationOn className="text-text text-sm" />
+							<MdOutlineLocationOn className="text-text text-sm w-3 h-3" />
 							<span className="text-text text-[13px]">
 								{post.address}
 							</span>

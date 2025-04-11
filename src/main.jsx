@@ -14,7 +14,7 @@ import React from "react";
 import NewSaved from "./containers/Public/NewsSaved.jsx";
 import AdminPage from "./containers/System/AdminPage.jsx";
 import CreatePost from "./components/Admin/CreatePost.jsx";
-import ListNewPost from "./containers/System/ListNewPost.jsx";
+import ListPost from "./containers/System/ListPost.jsx";
 
 const { store, persistor } = reduxStore();
 createRoot(document.getElementById("root")).render(
@@ -63,7 +63,7 @@ createRoot(document.getElementById("root")).render(
 
 							<Route
 								path={path.DANH_SACH_TIN_MOI}
-								element={<ListNewPost />}
+								element={<ListPost />}
 							/>
 						</Route>
 					</Routes>

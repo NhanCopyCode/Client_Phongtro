@@ -20,7 +20,7 @@ function ItemRental({ post, isInWhitelist }) {
 			);
 			setActiveHeart(false);
 		} else {
-			whitelist_posts.push(post);
+			whitelist_posts.unshift(post);
 		}
 
 		localStorage.setItem(
@@ -103,7 +103,7 @@ function ItemRental({ post, isInWhitelist }) {
 						to={"/tinh-thanh/binh-thanh"}
 						className="text-[12px] text-text line-clamp-1"
 					>
-						{post.address.split(": ")[1]}
+						{post.address}
 					</Link>
 				</div>
 

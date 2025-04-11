@@ -1,12 +1,14 @@
+import PropTypes from "prop-types";
 import Button from "../Button";
+import { Link } from "react-router-dom";
 
-function ListItem() {
+function ItemPost({ post }) {
 	return (
 		<div className="p-[14px] shadow-sm rounded-md flex items-stretch justify-between bg-white h-[200px]">
-			<div className="flex items-center gap-2 w-[664px]">
+			<Link className="flex items-center gap-2 w-[664px]">
 				<div className="w-[180px] h-[170px] shrink-0">
 					<img
-						src="https://via.placeholder.com/180x170"
+						src={JSON.parse(post.images?.image)[0]}
 						className="w-[100%] h-[100%] object-cover"
 					/>
 				</div>
@@ -18,23 +20,19 @@ function ListItem() {
 							textColor="text-text"
 							subClass={"uppercase"}
 						>
-							Phòng trọ
+							{post.category.value}
 						</Button>
 					</div>
-					<h3 className="text-[13px]">
-						Thông tin mô tả hông tin mô tả, Thông tin mô tả, Thông
-						tin mô tả
-					</h3>
+					<h3 className="text-[13px] line-clamp-1">{post.title}</h3>
 					<div className="flex items-center flex-wrap text-[13px] gap-2">
 						<span className="text-green-700 font-medium">
-							2 triệu/tháng
+							{post.attributes.price}
 						</span>
-						<span className="text-center">20 m2</span>
-						<span className="">
-							Cho thuê phòng trọ Quận 1, Hồ Chí Minh thuê phòng
-							trọ Quận 1, Hồ Chí Minh trọ Quận 1, Hồ Chí Minh trọ
-							Quận 1, Hồ Chí Minh trọ Quận 1, Hồ Chí Minh trọ Quận
-							1, Hồ Chí Minh
+						<span className="text-center">
+							{post.attributes.acreage}
+						</span>
+						<span className="line-clamp-3">
+							{JSON.parse(post.description).join(" ")}
 						</span>
 					</div>
 					<div className="flex items-center justify-between text-[11px] text-subtitle gap-8">
@@ -52,7 +50,7 @@ function ListItem() {
 						</div>
 					</div>
 				</div>
-			</div>
+			</Link>
 
 			{/* Can not set height 100% in this div below */}
 			<div className="p-5 bg-gray rounded-sm ml-3 h-[100%]">
@@ -91,4 +89,8 @@ function ListItem() {
 	);
 }
 
-export default ListItem;
+ItemPost.propTypes = {
+	post: PropTypes.object,
+};
+
+export default ItemPost;

@@ -59,7 +59,7 @@ const createPostService = async (data) => {
 		const response = await axios.post("/api/v1/posts/create", data, {
 			headers: {
 				"Content-Type": "multipart/form-data",
-			},	
+			},		
 		});
 
 		return response;
@@ -67,6 +67,29 @@ const createPostService = async (data) => {
 		console.log("Error at post service file: ", error);
 	}
 };
+
+const getPostServiceByUserId = async (userId) => {
+	try {
+		const response = await axios.get(
+			`/api/v1/posts/getPostByUserId/${userId}`
+		);
+		return response.data;
+	} catch (error) {
+		console.log("Error at post service: " + error);
+	}
+}
+
+const findPostByTitleAndUserId = async (title, userId) => {
+	try {
+		const response = await axios.get(
+			`/api/v1/posts/findPostByTitle/${userId}/${title}`
+		);
+
+		return response;
+	} catch (error) {
+		console.log("Error at post service: " + error);
+	}
+}
 export {
 	getAllPosts,
 	apiGetPostLimit,
@@ -74,4 +97,6 @@ export {
 	getPostByIdService,
 	getNewPostService,
 	createPostService,
+	getPostServiceByUserId,
+	findPostByTitleAndUserId,
 };

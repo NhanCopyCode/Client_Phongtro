@@ -11,7 +11,7 @@ import { navItemsCreatePost } from "../../utils/constants";
 import { requiredFieldsCreatePostForm } from "../../utils/constants";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { scrollToElement } from "../../utils/scrollEffect";
+import { scrollToElement, scrollToTop } from "../../utils/scrollEffect";
 import { useRef } from "react";
 import readMoneyVND from "../../utils/readMoneyVND";
 import isNumeric from "../../utils/isNumeric";
@@ -20,16 +20,23 @@ import { createPostService } from "../../services/postService";
 function CreatePost() {
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.auth);
-	console.log("user:", user);
 	const [price, setPrice] = useState("");
 	const [errors, setErrors] = useState({});
 	const [data, setData] = useState({
-		name: user?.name,
-		phone: user?.phone,
+		name: user?.name || "",
+		phone: user?.phone || "",
+		categoryCode: "",
+		provinceCode: "",
+		areaCode: "",
+		description: "",
+		title: "",
+		address: "",
+		priceCode: "",
+		images: [],
 	});
 	const [images, setImages] = useState([]);
 	const maxNumber = 69;
-	const { categories, provinces, prices } = useSelector((state) => state.app);
+	const { categories, provinces } = useSelector((state) => state.app);
 
 	const refs = {
 		categoryCode: useRef(),
@@ -80,7 +87,7 @@ function CreatePost() {
 	};
 
 	const handleSubmitData = async () => {
-		console.log("userid append: ", user?.id);
+		console.log("data submit: ", data);
 
 		if (!validation()) return;
 
@@ -96,17 +103,34 @@ function CreatePost() {
 				formData.append(key, data[key]);
 			}
 		}
-		formData.append("userId", user?.id);
 
 		try {
+			formData.append("userId", user?.id);
 			const result = await createPostService(formData);
+			if (result) {
+				setData({
+					name: user?.name || "",
+					phone: user?.phone || "",
+					categoryCode: "",
+					provinceCode: "",
+					areaCode: "",
+					description: "",
+					title: "",
+					address: "",
+					priceCode: "",
+					images: [],
+				});
+				setImages([]);
+				setPrice("");
+				setErrors({});
 
-			withReactContent(Swal).fire({
-				icon: "success",
-				title: <span>Đăng tin thành công</span>,
-			});
+				withReactContent(Swal).fire({
+					icon: "success",
+					title: <span>Đăng tin thành công</span>,
+				});
 
-			// Optionally reset form here
+				scrollToTop();
+			}
 		} catch (err) {
 			console.log("Submit error: ", err);
 			withReactContent(Swal).fire({
@@ -162,6 +186,7 @@ function CreatePost() {
 										e.target.value
 									)
 								}
+								value={data.categoryCode}
 							>
 								<option>Chọn loại chuyên mục</option>
 								{categories &&
@@ -205,6 +230,7 @@ function CreatePost() {
 										e.target.value
 									)
 								}
+								value={data.provinceCode}
 							>
 								<option>Chọn loại khu vực</option>
 								{provinces &&
@@ -240,6 +266,7 @@ function CreatePost() {
 						id=""
 						className="border border-text rounded-md p-2 w-[100%] border-subtitle outline-none"
 						onChange={(e) => handleSetData("title", e.target.value)}
+						value={data.title}
 					></textarea>
 					<div className="text-[11px]">
 						<p className="text-secondaryText">
@@ -259,6 +286,7 @@ function CreatePost() {
 						onChange={(e) =>
 							handleSetData("description", e.target.value)
 						}
+						value={data.description}
 					></textarea>
 					<div className="text-[11px]">
 						<p className="text-secondaryText">
@@ -279,6 +307,7 @@ function CreatePost() {
 						onChange={(e) =>
 							handleSetData("address", e.target.value)
 						}
+						value={data.address}
 					></textarea>
 					{errors.address && (
 						<span className="text-redColor text-[12px]">
@@ -290,10 +319,11 @@ function CreatePost() {
 						<input
 							type="number"
 							className="rounded-s-md border-subtitle border w-[80%] py-1 px-3 outline-none border-r-0"
-							onBlur={(e) =>
+							onChange={(e) =>
 								handleSetData("priceCode", e.target.value)
 							}
-							onChange={(e) => handleDisplayMoney(e.target.value)}
+							onBlur={(e) => handleDisplayMoney(e.target.value)}
+							value={data.priceCode}
 						/>
 						<span className="py-1 px-3 border border-subtitle rounded-e-md ">
 							đồng/tháng
@@ -316,6 +346,7 @@ function CreatePost() {
 								handleSetData("areaCode", e.target.value)
 							}
 							type="number"
+							value={data.areaCode}
 						/>
 						<span className="py-1 px-3 border border-subtitle rounded-e-md ">
 							m2
